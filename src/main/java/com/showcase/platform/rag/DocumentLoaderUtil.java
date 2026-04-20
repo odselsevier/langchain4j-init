@@ -9,7 +9,9 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Loads local text files from a directory and converts them into
@@ -29,13 +31,19 @@ public class DocumentLoaderUtil {
      */
     public static List<Document> loadTextFiles(Path directory) throws IOException {
         List<Document> docs = new ArrayList<>();
+        List<Path> txtFiles = new ArrayList<>();
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory, "*.txt")) {
             for (Path file : stream) {
-                String content = Files.readString(file);
-                Document doc = Document.from(content);
-                docs.add(doc);
-                log.debug("Loaded document: {} ({} chars)", file.getFileName(), content.length());
+                txtFiles.add(file);
             }
+        }
+        txtFiles.sort(Comparator.comparing(path ->
+                path.getFileName().toString().toLowerCase(Locale.ROOT)));
+        for (Path file : txtFiles) {
+            String content = Files.readString(file);
+            Document doc = Document.from(content);
+            docs.add(doc);
+            log.debug("Loaded document: {} ({} chars)", file.getFileName(), content.length());
         }
         log.info("Loaded {} document(s) from {}", docs.size(), directory);
         return docs;

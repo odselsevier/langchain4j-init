@@ -14,7 +14,7 @@ struct LogLine {
 let width = 3840
 let height = 2160
 let fps = 30
-let duration = 5.0
+let duration = 15.0
 let totalFrames = Int(duration * Double(fps))
 
 let outDir = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
@@ -22,8 +22,8 @@ let outDir = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
 try? FileManager.default.removeItem(at: outDir)
 try FileManager.default.createDirectory(at: outDir, withIntermediateDirectories: true)
 
-let font = NSFont(name: "Menlo", size: 40) ?? NSFont.monospacedSystemFont(ofSize: 40, weight: .regular)
-let promptFont = NSFont(name: "Menlo-Bold", size: 40) ?? NSFont.monospacedSystemFont(ofSize: 40, weight: .semibold)
+let font = NSFont(name: "Menlo", size: 35) ?? NSFont.monospacedSystemFont(ofSize: 35, weight: .regular)
+let promptFont = NSFont(name: "Menlo-Bold", size: 35) ?? NSFont.monospacedSystemFont(ofSize: 35, weight: .semibold)
 
 let neonGreen = NSColor(calibratedRed: 0.43, green: 1.0, blue: 0.55, alpha: 1.0)
 let neonBlue = NSColor(calibratedRed: 0.33, green: 0.73, blue: 1.0, alpha: 1.0)
@@ -31,17 +31,18 @@ let dimGreen = NSColor(calibratedRed: 0.30, green: 0.82, blue: 0.44, alpha: 1.0)
 let softWhite = NSColor(calibratedRed: 0.90, green: 0.97, blue: 0.93, alpha: 1.0)
 
 let prompt = "dykyio@dev ~/Documents/GitHub/langchain4j-init % "
-let command = "java -jar target/langchain4j-init-1.0.0-SNAPSHOT.jar tools"
+let command = "java -jar target/langchain4j-init-1.0.0-SNAPSHOT.jar faq"
 
 let logs: [LogLine] = [
-    .init(at: 1.05, text: "14:22:10.104 [main] INFO  com.showcase.Main - Launching demo: tools", color: dimGreen),
-    .init(at: 1.15, text: "14:22:10.119 [main] INFO  com.showcase.features.ToolCallingDemo - === Tool Calling Demo ===", color: neonBlue),
-    .init(at: 1.36, text: "14:22:10.361 [main] DEBUG dev.langchain4j.service.AiServices - Building AI service: AssistantWithTools", color: dimGreen),
-    .init(at: 1.62, text: "14:22:10.624 [main] DEBUG dev.langchain4j.service.AiServices - Registered tools: InventoryTools.checkInventory, InventoryTools.restockOrder", color: dimGreen),
-    .init(at: 2.05, text: "14:22:11.052 [main] INFO  dev.langchain4j.model.ollama.OllamaChatModel - Sending chat request to http://localhost:11434", color: dimGreen),
-    .init(at: 2.46, text: "14:22:11.468 [main] INFO  dev.langchain4j.model.ollama.OllamaChatModel - Tool execution requested: checkInventory(sku=WIDGET-99)", color: dimGreen),
-    .init(at: 3.05, text: "14:22:12.053 [main] INFO  com.showcase.ai.InventoryTools - checkInventory(WIDGET-99) -> SKU-WIDGET-99: 42 units in stock", color: dimGreen),
-    .init(at: 3.75, text: "14:22:12.757 [main] INFO  com.showcase.features.ToolCallingDemo - Assistant -> We currently have SKU-WIDGET-99: 42 units in stock.", color: softWhite)
+    .init(at: 3.10, text: "14:22:10.104 [main] INFO  com.showcase.Main - Launching demo: faq", color: dimGreen),
+    .init(at: 3.45, text: "14:22:10.119 [main] INFO  com.showcase.features.ToolCallingDemo - === Website FAQ Demo (RAG-style) ===", color: neonBlue),
+    .init(at: 4.05, text: "14:22:10.361 [main] DEBUG dev.langchain4j.service.AiServices - Building AI service: AssistantWithTools", color: dimGreen),
+    .init(at: 4.70, text: "14:22:10.624 [main] DEBUG dev.langchain4j.service.AiServices - Registered tools: WebsiteFaqTools.searchFaq, InventoryTools.checkInventory", color: dimGreen),
+    .init(at: 5.55, text: "14:22:11.052 [main] INFO  com.showcase.features.ToolCallingDemo - User -> What events are next and stock for PRODUCT-99?", color: dimGreen),
+    .init(at: 6.40, text: "14:22:11.468 [main] INFO  dev.langchain4j.model.ollama.OllamaChatModel - Tool execution requested: searchFaq(userQuestion)", color: dimGreen),
+    .init(at: 7.30, text: "14:22:11.924 [main] INFO  dev.langchain4j.model.ollama.OllamaChatModel - Tool execution requested: checkInventory(sku=PRODUCT-99)", color: dimGreen),
+    .init(at: 8.25, text: "14:22:12.353 [main] INFO  com.showcase.ai.InventoryTools - checkInventory(PRODUCT-99) -> SKU-PRODUCT-99: 42 products in stock", color: dimGreen),
+    .init(at: 9.60, text: "14:22:12.857 [main] INFO  com.showcase.features.ToolCallingDemo - Assistant -> Events are in the FAQ. SKU-PRODUCT-99 has 42 products in stock.", color: softWhite)
 ]
 
 func drawLine(_ context: CGContext, text: String, x: CGFloat, y: CGFloat, font: NSFont, color: NSColor) {
@@ -121,7 +122,7 @@ for frame in 0..<totalFrames {
 
         let tx = screenRect.minX + 66
         let ty = screenRect.minY + 110
-        let lineHeight: CGFloat = 52
+        let lineHeight: CGFloat = 46
 
         let typeProgress = max(0.0, min(1.0, t / 1.0))
         let typedCount = Int(Double(command.count) * typeProgress)

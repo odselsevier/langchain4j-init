@@ -13,7 +13,7 @@ class WebsiteFaqToolsTest {
     void eventQuestionsShouldReturnEventContext() {
         String result = tools.searchFaq("What events are coming up?");
         assertTrue(result.toLowerCase().contains("event"));
-        assertTrue(result.contains("2026-"));
+        assertTrue(result.toLowerCase().contains("upcoming"));
     }
 
     @Test
@@ -21,5 +21,12 @@ class WebsiteFaqToolsTest {
         String result = tools.searchFaq("What is your pricing plan?");
         assertTrue(result.toLowerCase().contains("pricing"));
         assertTrue(result.contains("USD"));
+    }
+
+    @Test
+    void unknownQuestionsShouldReturnNoDirectMatchMessage() {
+        String result = tools.searchFaq("What is your mascot animal?");
+        assertTrue(result.contains("FAQ match (none)"));
+        assertTrue(result.toLowerCase().contains("available topics"));
     }
 }

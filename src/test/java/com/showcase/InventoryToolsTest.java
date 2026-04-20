@@ -11,8 +11,8 @@ class InventoryToolsTest {
 
     @Test
     void checkInventoryShouldUseProductsInStockWording() {
-        String result = tools.checkInventory("WIDGET-99");
-        assertTrue(result.contains("SKU-WIDGET-99"));
+        String result = tools.checkInventory("PRODUCT-99");
+        assertTrue(result.contains("SKU-PRODUCT-99"));
         assertTrue(result.contains("42 products in stock"));
     }
 

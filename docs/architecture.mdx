@@ -27,18 +27,18 @@ sequenceDiagram
     participant Tool as InventoryTools.java
     participant Mem as ChatMemory
 
-    User->>App: "How many WIDGET-99 in stock?"
+    User->>App: "How many PRODUCT-99 in stock?"
     App->>AI: assistant.chat(userMessage)
     AI->>Mem: load previous messages
     Mem-->>AI: conversation history
     AI->>LLM: prompt + history + tool definitions
-    LLM-->>AI: tool_call: checkInventory("WIDGET-99")
-    AI->>Tool: checkInventory("WIDGET-99")
-    Tool-->>AI: "SKU-WIDGET-99: 42 units in stock"
+    LLM-->>AI: tool_call: checkInventory("PRODUCT-99")
+    AI->>Tool: checkInventory("PRODUCT-99")
+    Tool-->>AI: "SKU-PRODUCT-99: 42 units in stock"
     AI->>LLM: tool result
-    LLM-->>AI: "We have 42 units of WIDGET-99."
+    LLM-->>AI: "We have 42 units of PRODUCT-99."
     AI->>Mem: persist new messages
-    AI-->>App: "We have 42 units of WIDGET-99."
+    AI-->>App: "We have 42 units of PRODUCT-99."
     App-->>User: display response
 ```
 
