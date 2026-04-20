@@ -6,7 +6,7 @@
 
 | Tool           | Version  |
 |---------------|----------|
-| Java (JDK)    | 21+      |
+| Java (JDK)    | 17+      |
 | Maven         | 3.9+     |
 | Docker Desktop| 4.x (8 GB+ RAM recommended) |
 
@@ -34,7 +34,7 @@ java -jar target/langchain4j-init-1.0.0-SNAPSHOT.jar tools
 ```
 .
 ├── docker-compose.yml              # Ollama + Milvus local stack
-├── pom.xml                         # Java 21 / LangChain4j dependencies
+├── pom.xml                         # Java 17+ / LangChain4j dependencies
 ├── src
 │   ├── main
 │   │   ├── java/com/showcase
