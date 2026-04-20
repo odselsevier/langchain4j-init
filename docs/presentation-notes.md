@@ -1,7 +1,7 @@
-# langchain4j-init — 6.5-Minute Presentation Script
+# langchain4j-init — 7.5-Minute Presentation Script
 
 > **Target audience:** Java developers and tech leads evaluating LLM integration.
-> **Duration:** ~6.5 minutes (13 slides)
+> **Duration:** ~7.5 minutes (15 slides)
 
 ---
 
@@ -29,7 +29,24 @@ proxies backed by Ollama or OpenAI. A Milvus vector store handles RAG."
 
 ---
 
-## Slide 4 — Tech Stack & Tools (40 s)
+## Slide 4 — What Is LangChain4j? (35 s)
+
+"LangChain4j is a Java-first framework for building LLM apps with practical abstractions:
+AiServices, tool-calling, memory, and RAG utilities. It lets Java teams move faster
+without writing glue code for every model call."
+
+---
+
+## Slide 5 — LangChain4j vs Spring AI (40 s)
+
+"Both are strong options.
+LangChain4j is framework-agnostic and great when you want portability across Java stacks.
+Spring AI is excellent when your team is fully invested in Spring Boot conventions.
+For this repo, LangChain4j maps directly to the demo architecture."
+
+---
+
+## Slide 6 — Tech Stack & Tools (40 s)
 
 "Before code patterns, here is the stack we are actually running:
 Java 17 + Maven, LangChain4j, Ollama/OpenAI models, Milvus as vector DB,
@@ -38,7 +55,7 @@ Docker Compose makes this reproducible on any developer machine."
 
 ---
 
-## Slide 5 — Design Patterns in Java (40 s)
+## Slide 7 — Design Patterns in Java (40 s)
 
 "Let me highlight four patterns we use:
 
@@ -55,7 +72,7 @@ Docker Compose makes this reproducible on any developer machine."
 
 ---
 
-## Slide 6 — Code Spotlight: Structured Output (30 s)
+## Slide 8 — Code Spotlight: Structured Output (30 s)
 
 "Here's the magic: you define an interface with `@SystemMessage`, return a
 Java record, and LangChain4j handles prompt engineering, JSON parsing, and
@@ -70,7 +87,7 @@ public interface SupportExtractorService {
 
 ---
 
-## Slide 7 — Code Spotlight: Tool Calling (30 s)
+## Slide 9 — Code Spotlight: Tool Calling (30 s)
 
 "Tool calling lets the LLM invoke **your** Java methods. Annotate a method
 with `@Tool`, wire it into the AiService builder, and the model decides
@@ -83,7 +100,7 @@ public String checkInventory(String sku) { ... }
 
 ---
 
-## Slide 8 — RAG Ingestion Pipeline (30 s)
+## Slide 10 — RAG Ingestion Pipeline (30 s)
 
 "For retrieval-augmented generation we use a four-stage pipeline:
 Load → Split → Embed → Store. The `IngestionPipeline` class composes
@@ -92,7 +109,7 @@ Strategy pattern again — swap any piece independently."
 
 ---
 
-## Slide 9 — What Is RAG? (30 s)
+## Slide 11 — What Is RAG? (30 s)
 
 "RAG means retrieval-augmented generation: the model looks up relevant
 document chunks first, then writes an answer grounded in those chunks.
@@ -100,7 +117,7 @@ In plain terms: don't guess from memory, read first, then respond."
 
 ---
 
-## Slide 10 — Use Cases & Benefits (40 s)
+## Slide 12 — Use Cases & Benefits (40 s)
 
 "What are we actually presenting from a benefits perspective?
 - LangChain4j fit rubric (`fit`) -> faster architecture decisions, less over-engineering.
@@ -113,7 +130,7 @@ This is the key message: faster operations, higher answer quality, lower support
 
 ---
 
-## Slide 11 — Interactive MDX Documentation (20 s)
+## Slide 13 — Interactive MDX Documentation (20 s)
 
 "Documentation isn't an afterthought. We use MDX with embedded Mermaid
 diagrams that render in GitHub and MDX sites. Docs evolve in the same PRs
@@ -121,14 +138,14 @@ as code, so architecture does not drift."
 
 ---
 
-## Slide 12 — Java ↔ MDX Synergy (20 s)
+## Slide 14 — Java ↔ MDX Synergy (20 s)
 
 "Every major Java component has a matching visual. Update code and diagram in
 one commit. That lowers onboarding time and reduces tribal knowledge."
 
 ---
 
-## Slide 13 — Developer Experience & Testing (30 s)
+## Slide 15 — Developer Experience & Testing (30 s)
 
 "We prioritise DX:
 - `docker compose up` gives you Ollama + Milvus in seconds.

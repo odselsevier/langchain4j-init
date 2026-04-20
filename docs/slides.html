@@ -127,19 +127,22 @@ body::before {
   font-size: 0.82rem;
   justify-content: center;
 }
-.logo-dot {
-  width: 1.35rem;
-  height: 1.35rem;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: #07101a;
-  font-weight: 800;
-  font-size: 0.65rem;
+.logo-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  object-fit: contain;
+  flex: 0 0 auto;
 }
 .lc4j-logo { margin-top: 1rem; width: 100%; max-width: 38rem; }
-.lc4j-logo svg { width: 100%; height: auto; display: block; }
+.lc4j-logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(15, 23, 39, 0.78);
+  padding: 1rem 1.2rem;
+}
 
 /* ── Code blocks ───────────────────────────────────────── */
 pre {
@@ -326,18 +329,6 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Architecture at a Glance</h2>
-<div class="diagram">┌─────────────┐     ┌──────────────────┐     ┌──────────────────┐
-│  Main.java  │────▸│  Feature Demos   │────▸│  AiService Proxy │
-│  CLI entry  │     │  extract / tools │     │  (dynamic proxy) │
-└─────────────┘     │  memory / ingest │     └────────┬─────────┘
-                    └──────────────────┘              │
-                          ┌───────────────────────────┼──────────────┐
-                          ▼                           ▼              ▼
-                   ┌─────────────┐          ┌──────────────┐  ┌──────────┐
-                   │ Tool Defs   │          │ ChatMemory   │  │ LLM      │
-                   │ @Tool       │          │ Window(10)   │  │ Ollama / │
-                   └─────────────┘          └──────────────┘  │ OpenAI   │
-                                                              └──────────┘</div>
   <div class="vector-panel">
     <svg viewBox="0 0 980 300" role="img" aria-label="Architecture flow from CLI to demos and runtime components">
       <defs>
@@ -389,25 +380,32 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
     <li>Goal: ship AI features in Java without writing glue code for every model interaction.</li>
   </ul>
   <div class="lc4j-logo">
-    <svg viewBox="0 0 760 200" role="img" aria-label="LangChain4j logo style mark">
-      <defs>
-        <linearGradient id="lc4jGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#00d4ff"></stop>
-          <stop offset="100%" stop-color="#6ef3a5"></stop>
-        </linearGradient>
-      </defs>
-      <rect x="20" y="32" width="140" height="140" rx="28" fill="#0f1727" stroke="#24304a"></rect>
-      <path d="M55 80 h45 a18 18 0 0 1 18 18 v4 a18 18 0 0 1-18 18 h-8" fill="none" stroke="url(#lc4jGrad)" stroke-width="10" stroke-linecap="round"></path>
-      <path d="M125 128 h-35 a18 18 0 0 1-18-18 v-4 a18 18 0 0 1 18-18 h8" fill="none" stroke="#7aa2ff" stroke-width="10" stroke-linecap="round"></path>
-      <text x="190" y="103" fill="#eaf1ff" font-size="52" font-weight="700" font-family="Space Grotesk, sans-serif">LangChain4j</text>
-      <text x="190" y="136" fill="#8fa0c6" font-size="18" font-family="Manrope, sans-serif">Java-first orchestration for LLM applications</text>
-    </svg>
+    <img src="https://docs.langchain4j.dev/img/logo.svg" alt="LangChain4j logo from official docs">
   </div>
   <p style="margin-top:0.7rem;color:var(--text-low);">Think: Spring-style ergonomics for LLM workflows.</p>
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 5 — Tech Stack                                  -->
+<!-- SLIDE 5 — LangChain4j vs Spring AI                    -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="slide">
+  <h2>LangChain4j vs Spring AI</h2>
+  <table>
+    <tr><th>Dimension</th><th>LangChain4j</th><th>Spring AI</th></tr>
+    <tr><td>Primary style</td><td>Framework-agnostic Java library</td><td>Spring ecosystem-first abstraction layer</td></tr>
+    <tr><td>Core programming model</td><td>Interface + annotation driven <code>AiServices</code></td><td>Bean/client driven APIs with Spring configuration</td></tr>
+    <tr><td>Best for</td><td>Plain Java, Quarkus, Micronaut, Helidon, Spring Boot</td><td>Teams already standardized on Spring Boot</td></tr>
+    <tr><td>Tool/function calling</td><td><code>@Tool</code> + Java methods, easy service wiring</td><td>Tool/function callbacks integrated into Spring AI clients</td></tr>
+    <tr><td>RAG and vector stores</td><td>Broad integrations, retrieval utilities, ingestion patterns</td><td>Strong Spring Data style integrations and advisors</td></tr>
+    <tr><td>Pros</td><td>Portable across Java stacks, clean typed interfaces, quick to demo AI patterns</td><td>Excellent Spring Boot integration, familiar dependency injection/config model, strong enterprise adoption</td></tr>
+    <tr><td>Cons</td><td>Smaller ecosystem mindshare than Spring in some enterprises, fewer Spring-native conventions out of the box</td><td>Best experience tied to Spring stack, less ideal for non-Spring runtimes, some abstractions are still evolving quickly</td></tr>
+    <tr><td>Recommendation for this project</td><td><strong>Fits current architecture and demos directly</strong></td><td>Great option if we commit to deeper Spring conventions</td></tr>
+  </table>
+  <p style="margin-top:1rem;color:var(--text-low);">Both are strong. The practical choice is the one that matches your existing runtime and team habits.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SLIDE 6 — Tech Stack                                  -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Tech Stack &amp; Tools Used (Vector DB + Object Storage)</h2>
@@ -455,19 +453,19 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
     </svg>
   </div>
   <div class="logo-strip">
-    <div class="logo-pill"><span class="logo-dot" style="background:#f89820;">J</span> Java</div>
-    <div class="logo-pill"><span class="logo-dot" style="background:#c71a36; color:#fff;">M</span> Maven</div>
-    <div class="logo-pill"><span class="logo-dot" style="background:#00d4ff;">LC</span> LangChain4j</div>
-    <div class="logo-pill"><span class="logo-dot" style="background:#111; color:#fff;">O</span> Ollama</div>
-    <div class="logo-pill"><span class="logo-dot" style="background:#58a6ff;">OA</span> OpenAI</div>
-    <div class="logo-pill"><span class="logo-dot" style="background:#6ef3a5;">MV</span> Milvus</div>
-    <div class="logo-pill"><span class="logo-dot" style="background:#c72e29; color:#fff;">MO</span> MinIO</div>
-    <div class="logo-pill"><span class="logo-dot" style="background:#7aa2ff;">ET</span> etcd</div>
+    <div class="logo-pill"><img class="logo-icon" src="https://cdn.simpleicons.org/openjdk/F89820" alt="Java logo"> Java</div>
+    <div class="logo-pill"><img class="logo-icon" src="https://cdn.simpleicons.org/apachemaven/C71A36" alt="Maven logo"> Maven</div>
+    <div class="logo-pill"><img class="logo-icon" src="https://github.com/langchain4j.png" alt="LangChain4j logo"> LangChain4j</div>
+    <div class="logo-pill"><img class="logo-icon" src="https://cdn.simpleicons.org/ollama/FFFFFF" alt="Ollama logo"> Ollama</div>
+    <div class="logo-pill"><img class="logo-icon" src="https://cdn.simpleicons.org/openai/FFFFFF" alt="OpenAI logo"> OpenAI</div>
+    <div class="logo-pill"><img class="logo-icon" src="https://cdn.simpleicons.org/milvus/00D2FF" alt="Milvus logo"> Milvus</div>
+    <div class="logo-pill"><img class="logo-icon" src="https://cdn.simpleicons.org/minio/C72E29" alt="MinIO logo"> MinIO</div>
+    <div class="logo-pill"><img class="logo-icon" src="https://cdn.simpleicons.org/etcd/419EDA" alt="etcd logo"> etcd</div>
   </div>
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 6 — Design Patterns                             -->
+<!-- SLIDE 7 — Design Patterns                             -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Design Patterns Used</h2>
@@ -512,7 +510,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 7 — Structured Output                           -->
+<!-- SLIDE 8 — Structured Output                           -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Structured Output Extraction</h2>
@@ -529,7 +527,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 8 — Tool Calling                                -->
+<!-- SLIDE 9 — Tool Calling                                -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Tool Calling</h2>
@@ -549,27 +547,10 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 9 — RAG Pipeline                                -->
+<!-- SLIDE 10 — RAG Pipeline                               -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>RAG Ingestion Pipeline</h2>
-<div class="diagram">  📂 Local Documents
-        │
-        ▼  DocumentLoaderUtil
-  ┌────────────┐
-  │  Document   │  ──▸  DocumentSplitters.recursive(300, 30)
-  └────────────┘
-        │
-        ▼  chunks
-  ┌────────────┐
-  │  Segments   │  ──▸  EmbeddingModel.embedAll()
-  └────────────┘
-        │
-        ▼  vectors
-  ┌────────────┐
-  │  Milvus /  │  ◀──  EmbeddingStoreIngestor
-  │  InMemory  │
-  └────────────┘</div>
   <p style="margin-top:1rem;">Strategy pattern — swap any stage independently.</p>
   <div class="vector-panel">
     <svg viewBox="0 0 980 230" role="img" aria-label="RAG ingestion from documents to vector embeddings">
@@ -605,7 +586,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 10 — What Is RAG                                 -->
+<!-- SLIDE 11 — What Is RAG                                -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>What Is RAG?</h2>
@@ -651,7 +632,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 11 — Use Cases & Benefits                        -->
+<!-- SLIDE 12 — Use Cases & Benefits                       -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Use Cases We’re Presenting (Benefits View)</h2>
@@ -721,7 +702,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 12 — MDX Documentation                           -->
+<!-- SLIDE 13 — MDX Documentation                          -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Interactive MDX Documentation</h2>
@@ -735,7 +716,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 13 — Java ↔ MDX Synergy                         -->
+<!-- SLIDE 14 — Java ↔ MDX Synergy                         -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Java ↔ MDX Synergy</h2>
@@ -777,7 +758,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 14 — DX & Testing                               -->
+<!-- SLIDE 15 — DX & Testing                               -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Developer Experience &amp; Testing</h2>
@@ -799,7 +780,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 <!-- ── Navigation ────────────────────────────────────────── -->
 <nav>
   <button id="prev" aria-label="Previous slide">◂ Prev</button>
-  <span id="counter">1 / 14</span>
+  <span id="counter">1 / 15</span>
   <div id="pagination" class="pagination" aria-label="Slide pagination"></div>
   <button id="next" aria-label="Next slide">Next ▸</button>
 </nav>
@@ -812,7 +793,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
   const nextBtn = document.getElementById('next');
   const pagination = document.getElementById('pagination');
   let current = 0;
-  const slideIcons = ['🏷️', '😂', '🏗️', '🔗', '🧰', '🧩', '🧾', '🛠️', '📚', '🔎', '💼', '📝', '🔗', '⚙️'];
+  const slideIcons = ['🏷️', '😂', '🏗️', '🔗', '⚖️', '🧰', '🧩', '🧾', '🛠️', '📚', '🔎', '💼', '📝', '🔗', '⚙️'];
 
   const pageButtons = Array.from(slides).map(function (_, index) {
     const btn = document.createElement('button');

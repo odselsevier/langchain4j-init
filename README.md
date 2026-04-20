@@ -120,7 +120,7 @@ java -jar target/langchain4j-init-1.0.0-SNAPSHOT.jar ingest
 └── docs
     ├── architecture.mdx            # Mermaid diagrams: AI service flow
     ├── rag-pipeline.mdx            # Mermaid diagrams: RAG ingestion flow
-    ├── presentation-notes.md       # 13-slide speaker notes
+    ├── presentation-notes.md       # 15-slide speaker notes
     └── slides.html                 # HTML slide deck
 ```
 
@@ -141,5 +141,5 @@ mvn verify
 
 - [Architecture - AI Service Orchestration](docs/architecture.mdx)
 - [RAG Pipeline - Document Ingestion](docs/rag-pipeline.mdx)
-- [6.5-Minute Presentation - Speaker Notes](docs/presentation-notes.md)
+- [7.5-Minute Presentation - Speaker Notes](docs/presentation-notes.md)
 - [Slide Deck (HTML)](docs/slides.html) - open in any browser, navigate with arrow keys
