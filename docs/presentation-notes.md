@@ -1,7 +1,7 @@
 # langchain4j-init — 5-Minute Presentation Script
 
 > **Target audience:** Java developers and tech leads evaluating LLM integration.
-> **Duration:** ~5 minutes (10 slides)
+> **Duration:** ~6 minutes (12 slides)
 
 ---
 
@@ -82,25 +82,42 @@ Strategy pattern again — swap any piece independently."
 
 ---
 
-## Slide 8 — Interactive MDX Documentation (30 s)
+## Slide 8 — What Is RAG? (30 s)
 
-"Documentation isn't an afterthought. We use **MDX** files with embedded
-Mermaid diagrams — sequence diagrams, flowcharts, and state machines — that
-render live in GitHub and in any MDX-compatible site (Docusaurus, Nextra).
-The docs evolve alongside the code in the same PR."
-
----
-
-## Slide 9 — Java ↔ MDX Synergy (30 s)
-
-"Here's the synergy: every Java interface and pipeline class has a matching
-Mermaid diagram in MDX. Change the code, update the diagram in the same commit.
-Developers get executable code **and** visual documentation — no context
-switching, no stale wikis."
+"RAG means retrieval-augmented generation: the model looks up relevant
+document chunks first, then writes an answer grounded in those chunks.
+In plain terms: don't guess from memory, read first, then respond."
 
 ---
 
-## Slide 10 — Developer Experience & Testing (30 s)
+## Slide 9 — Use Cases & Benefits (45 s)
+
+"What are we actually presenting from a benefits perspective?
+- Support ticket triage with structured extraction -> faster routing and better SLA performance.
+- Inventory-aware assistant via tool-calling -> real-time answers and fewer escalations.
+- Knowledge Q&A over internal docs via RAG -> more grounded answers, fewer hallucinations.
+- Multi-turn support memory -> less repeated context from users.
+
+This is the key message: faster operations, higher answer quality, lower support cost."
+
+---
+
+## Slide 10 — Interactive MDX Documentation (25 s)
+
+"Documentation isn't an afterthought. We use MDX with embedded Mermaid
+diagrams that render in GitHub and MDX sites. Docs evolve in the same PRs
+as code, so architecture does not drift."
+
+---
+
+## Slide 11 — Java ↔ MDX Synergy (25 s)
+
+"Every major Java component has a matching visual. Update code and diagram in
+one commit. That lowers onboarding time and reduces tribal knowledge."
+
+---
+
+## Slide 12 — Developer Experience & Testing (30 s)
 
 "We prioritise DX:
 - `docker compose up` gives you Ollama + Milvus in seconds.
@@ -113,5 +130,9 @@ switching, no stale wikis."
 
 ## Closing (15 s)
 
-"To summarise: clean Java patterns, interactive MDX docs, and a frictionless
-developer experience. The repo is ready to fork — thank you!"
+"To summarise:
+- quickest start path gives value in minutes (`tools` or `extract`)
+- LangChain4j fits best when you need typed outputs, tool-calling, memory, or RAG
+- use plain model calls for tiny one-off prompts
+
+The repo is ready to fork — thank you!"

@@ -31,6 +31,8 @@ body { display: flex; flex-direction: column; }
 .rag-visual-wrap { margin-top: 1.2rem; width: 100%; max-width: 60rem; }
 .rag-visual { width: 100%; height: auto; }
 .rag-caption { margin-top: 0.8rem; font-size: 1.05rem; color: #8b949e; }
+.vector-panel { margin-top: 1rem; width: 100%; max-width: 60rem; }
+.vector-panel svg { width: 100%; height: auto; display: block; }
 
 /* ── Code blocks ───────────────────────────────────────── */
 pre {
@@ -145,6 +147,44 @@ nav span { color: #8b949e; font-size: 0.95rem; min-width: 5rem; text-align: cent
                    │ @Tool       │          │ Window(10)   │  │ Ollama / │
                    └─────────────┘          └──────────────┘  │ OpenAI   │
                                                               └──────────┘</div>
+  <div class="vector-panel">
+    <svg viewBox="0 0 980 300" role="img" aria-label="Architecture flow from CLI to demos and runtime components">
+      <defs>
+        <marker id="archArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"></path>
+        </marker>
+      </defs>
+      <rect x="20" y="30" width="180" height="70" rx="10" fill="#161b22" stroke="#30363d"/>
+      <text x="110" y="58" fill="#c9d1d9" font-size="16" text-anchor="middle">Main.java</text>
+      <text x="110" y="78" fill="#8b949e" font-size="12" text-anchor="middle">CLI entry</text>
+
+      <rect x="250" y="30" width="220" height="70" rx="10" fill="#161b22" stroke="#30363d"/>
+      <text x="360" y="58" fill="#c9d1d9" font-size="16" text-anchor="middle">Feature Demos</text>
+      <text x="360" y="78" fill="#8b949e" font-size="12" text-anchor="middle">extract | tools | memory | ingest</text>
+
+      <rect x="520" y="30" width="220" height="70" rx="10" fill="#161b22" stroke="#30363d"/>
+      <text x="630" y="58" fill="#c9d1d9" font-size="16" text-anchor="middle">AiService Proxy</text>
+      <text x="630" y="78" fill="#8b949e" font-size="12" text-anchor="middle">generated at runtime</text>
+
+      <rect x="780" y="30" width="180" height="70" rx="10" fill="#0f2a46" stroke="#58a6ff"/>
+      <text x="870" y="58" fill="#e6edf3" font-size="16" text-anchor="middle">LLM</text>
+      <text x="870" y="78" fill="#a5d6ff" font-size="12" text-anchor="middle">Ollama / OpenAI</text>
+
+      <rect x="330" y="180" width="150" height="70" rx="10" fill="#161b22" stroke="#30363d"/>
+      <text x="405" y="208" fill="#c9d1d9" font-size="15" text-anchor="middle">Tool Defs</text>
+      <text x="405" y="226" fill="#8b949e" font-size="12" text-anchor="middle">@Tool</text>
+
+      <rect x="530" y="180" width="170" height="70" rx="10" fill="#161b22" stroke="#30363d"/>
+      <text x="615" y="208" fill="#c9d1d9" font-size="15" text-anchor="middle">ChatMemory</text>
+      <text x="615" y="226" fill="#8b949e" font-size="12" text-anchor="middle">Window(10)</text>
+
+      <line x1="200" y1="65" x2="250" y2="65" stroke="#58a6ff" stroke-width="3" marker-end="url(#archArrow)"/>
+      <line x1="470" y1="65" x2="520" y2="65" stroke="#58a6ff" stroke-width="3" marker-end="url(#archArrow)"/>
+      <line x1="740" y1="65" x2="780" y2="65" stroke="#58a6ff" stroke-width="3" marker-end="url(#archArrow)"/>
+      <line x1="630" y1="100" x2="405" y2="180" stroke="#58a6ff" stroke-width="2.5" marker-end="url(#archArrow)"/>
+      <line x1="640" y1="100" x2="615" y2="180" stroke="#58a6ff" stroke-width="2.5" marker-end="url(#archArrow)"/>
+    </svg>
+  </div>
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
@@ -163,6 +203,33 @@ nav span { color: #8b949e; font-size: 0.95rem; min-width: 5rem; text-align: cent
     <tr><td><span class="badge">Value Object</span></td>
         <td><code>TicketDetails</code> Java record — immutable structured output</td></tr>
   </table>
+  <div class="vector-panel">
+    <svg viewBox="0 0 980 240" role="img" aria-label="Design patterns mapped to benefits">
+      <rect x="20" y="20" width="220" height="90" rx="10" fill="#161b22" stroke="#30363d"/>
+      <text x="130" y="52" fill="#c9d1d9" font-size="16" text-anchor="middle">Dynamic Proxy</text>
+      <text x="130" y="74" fill="#8b949e" font-size="12" text-anchor="middle">AiServices.create()</text>
+      <text x="130" y="92" fill="#58a6ff" font-size="12" text-anchor="middle">less glue code</text>
+
+      <rect x="260" y="20" width="220" height="90" rx="10" fill="#161b22" stroke="#30363d"/>
+      <text x="370" y="52" fill="#c9d1d9" font-size="16" text-anchor="middle">Builder</text>
+      <text x="370" y="74" fill="#8b949e" font-size="12" text-anchor="middle">model + services setup</text>
+      <text x="370" y="92" fill="#58a6ff" font-size="12" text-anchor="middle">clear configuration</text>
+
+      <rect x="500" y="20" width="220" height="90" rx="10" fill="#161b22" stroke="#30363d"/>
+      <text x="610" y="52" fill="#c9d1d9" font-size="16" text-anchor="middle">Strategy</text>
+      <text x="610" y="74" fill="#8b949e" font-size="12" text-anchor="middle">swap models/stores</text>
+      <text x="610" y="92" fill="#58a6ff" font-size="12" text-anchor="middle">easy experiments</text>
+
+      <rect x="740" y="20" width="220" height="90" rx="10" fill="#161b22" stroke="#30363d"/>
+      <text x="850" y="52" fill="#c9d1d9" font-size="16" text-anchor="middle">Value Object</text>
+      <text x="850" y="74" fill="#8b949e" font-size="12" text-anchor="middle">TicketDetails record</text>
+      <text x="850" y="92" fill="#58a6ff" font-size="12" text-anchor="middle">typed outputs</text>
+
+      <rect x="260" y="140" width="460" height="80" rx="12" fill="#0f2a46" stroke="#58a6ff"/>
+      <text x="490" y="172" fill="#e6edf3" font-size="16" text-anchor="middle">Outcome</text>
+      <text x="490" y="194" fill="#a5d6ff" font-size="13" text-anchor="middle">Predictable, testable, maintainable AI integration in Java</text>
+    </svg>
+  </div>
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
@@ -225,6 +292,37 @@ nav span { color: #8b949e; font-size: 0.95rem; min-width: 5rem; text-align: cent
   │  InMemory  │
   └────────────┘</div>
   <p style="margin-top:1rem;">Strategy pattern — swap any stage independently.</p>
+  <div class="vector-panel">
+    <svg viewBox="0 0 980 230" role="img" aria-label="RAG ingestion from documents to vector embeddings">
+      <defs>
+        <marker id="ingestArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"></path>
+        </marker>
+      </defs>
+      <rect x="20" y="80" width="170" height="70" rx="10" fill="#161b22" stroke="#30363d"/>
+      <text x="105" y="108" fill="#c9d1d9" font-size="14" text-anchor="middle">Documents</text>
+      <text x="105" y="128" fill="#8b949e" font-size="12" text-anchor="middle">loader</text>
+
+      <rect x="230" y="80" width="170" height="70" rx="10" fill="#161b22" stroke="#30363d"/>
+      <text x="315" y="108" fill="#c9d1d9" font-size="14" text-anchor="middle">Split</text>
+      <text x="315" y="128" fill="#8b949e" font-size="12" text-anchor="middle">recursive(300,30)</text>
+
+      <rect x="440" y="80" width="170" height="70" rx="10" fill="#161b22" stroke="#30363d"/>
+      <text x="525" y="108" fill="#c9d1d9" font-size="14" text-anchor="middle">Embed</text>
+      <text x="525" y="128" fill="#8b949e" font-size="12" text-anchor="middle">embedAll()</text>
+
+      <rect x="650" y="80" width="170" height="70" rx="10" fill="#161b22" stroke="#30363d"/>
+      <text x="735" y="108" fill="#c9d1d9" font-size="14" text-anchor="middle">Store</text>
+      <text x="735" y="128" fill="#8b949e" font-size="12" text-anchor="middle">Milvus / InMemory</text>
+
+      <rect x="360" y="20" width="260" height="42" rx="8" fill="#0f2a46" stroke="#58a6ff"/>
+      <text x="490" y="47" fill="#a5d6ff" font-size="13" text-anchor="middle">IngestionPipeline orchestrates all stages</text>
+
+      <line x1="190" y1="115" x2="230" y2="115" stroke="#58a6ff" stroke-width="3" marker-end="url(#ingestArrow)"/>
+      <line x1="400" y1="115" x2="440" y2="115" stroke="#58a6ff" stroke-width="3" marker-end="url(#ingestArrow)"/>
+      <line x1="610" y1="115" x2="650" y2="115" stroke="#58a6ff" stroke-width="3" marker-end="url(#ingestArrow)"/>
+    </svg>
+  </div>
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
@@ -304,6 +402,38 @@ nav span { color: #8b949e; font-size: 0.95rem; min-width: 5rem; text-align: cent
   <p style="margin-top:1.3rem;color:#58a6ff;">
     Message for stakeholders: <strong>faster operations, better answer quality, and lower support cost.</strong>
   </p>
+  <div class="vector-panel">
+    <svg viewBox="0 0 980 250" role="img" aria-label="Use cases flowing to business outcomes">
+      <defs>
+        <marker id="benefitArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"></path>
+        </marker>
+      </defs>
+      <rect x="20" y="20" width="220" height="50" rx="10" fill="#161b22" stroke="#30363d"/>
+      <text x="130" y="50" fill="#c9d1d9" font-size="14" text-anchor="middle">Support triage</text>
+      <rect x="20" y="85" width="220" height="50" rx="10" fill="#161b22" stroke="#30363d"/>
+      <text x="130" y="115" fill="#c9d1d9" font-size="14" text-anchor="middle">Inventory assistant</text>
+      <rect x="20" y="150" width="220" height="50" rx="10" fill="#161b22" stroke="#30363d"/>
+      <text x="130" y="180" fill="#c9d1d9" font-size="14" text-anchor="middle">Docs Q&A (RAG)</text>
+
+      <rect x="320" y="55" width="300" height="110" rx="12" fill="#0f2a46" stroke="#58a6ff"/>
+      <text x="470" y="88" fill="#e6edf3" font-size="16" text-anchor="middle">LangChain4j capabilities</text>
+      <text x="470" y="112" fill="#a5d6ff" font-size="13" text-anchor="middle">structured output + tools</text>
+      <text x="470" y="132" fill="#a5d6ff" font-size="13" text-anchor="middle">memory + retrieval</text>
+
+      <rect x="700" y="20" width="260" height="180" rx="12" fill="#161b22" stroke="#30363d"/>
+      <text x="830" y="55" fill="#c9d1d9" font-size="16" text-anchor="middle">Business outcomes</text>
+      <text x="830" y="85" fill="#58a6ff" font-size="13" text-anchor="middle">Faster operations</text>
+      <text x="830" y="110" fill="#58a6ff" font-size="13" text-anchor="middle">Higher answer quality</text>
+      <text x="830" y="135" fill="#58a6ff" font-size="13" text-anchor="middle">Lower support cost</text>
+      <text x="830" y="160" fill="#8b949e" font-size="12" text-anchor="middle">and easier onboarding</text>
+
+      <line x1="240" y1="45" x2="320" y2="95" stroke="#58a6ff" stroke-width="2.5" marker-end="url(#benefitArrow)"/>
+      <line x1="240" y1="110" x2="320" y2="110" stroke="#58a6ff" stroke-width="2.5" marker-end="url(#benefitArrow)"/>
+      <line x1="240" y1="175" x2="320" y2="125" stroke="#58a6ff" stroke-width="2.5" marker-end="url(#benefitArrow)"/>
+      <line x1="620" y1="110" x2="700" y2="110" stroke="#58a6ff" stroke-width="3" marker-end="url(#benefitArrow)"/>
+    </svg>
+  </div>
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
@@ -333,6 +463,33 @@ nav span { color: #8b949e; font-size: 0.95rem; min-width: 5rem; text-align: cent
     <tr><td><code>AiServices</code> lifecycle</td><td>State machine diagram</td></tr>
   </table>
   <p style="margin-top:1.5rem;">Change code → update diagram → <strong>one commit, one review</strong>.</p>
+  <div class="vector-panel">
+    <svg viewBox="0 0 980 230" role="img" aria-label="Java components mirrored by MDX visuals">
+      <defs>
+        <marker id="syncArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"></path>
+        </marker>
+      </defs>
+      <rect x="30" y="30" width="360" height="170" rx="12" fill="#161b22" stroke="#30363d"/>
+      <text x="210" y="58" fill="#c9d1d9" font-size="17" text-anchor="middle">Java Source</text>
+      <text x="210" y="88" fill="#8b949e" font-size="13" text-anchor="middle">SupportExtractorService</text>
+      <text x="210" y="112" fill="#8b949e" font-size="13" text-anchor="middle">AssistantWithTools + InventoryTools</text>
+      <text x="210" y="136" fill="#8b949e" font-size="13" text-anchor="middle">IngestionPipeline</text>
+      <text x="210" y="160" fill="#8b949e" font-size="13" text-anchor="middle">AiServices lifecycle</text>
+
+      <rect x="590" y="30" width="360" height="170" rx="12" fill="#0f2a46" stroke="#58a6ff"/>
+      <text x="770" y="58" fill="#e6edf3" font-size="17" text-anchor="middle">MDX Visuals</text>
+      <text x="770" y="88" fill="#a5d6ff" font-size="13" text-anchor="middle">structured output sequence</text>
+      <text x="770" y="112" fill="#a5d6ff" font-size="13" text-anchor="middle">tool-calling sequence</text>
+      <text x="770" y="136" fill="#a5d6ff" font-size="13" text-anchor="middle">RAG flowchart</text>
+      <text x="770" y="160" fill="#a5d6ff" font-size="13" text-anchor="middle">state machine diagram</text>
+
+      <line x1="390" y1="88" x2="590" y2="88" stroke="#58a6ff" stroke-width="2.5" marker-end="url(#syncArrow)"/>
+      <line x1="390" y1="112" x2="590" y2="112" stroke="#58a6ff" stroke-width="2.5" marker-end="url(#syncArrow)"/>
+      <line x1="390" y1="136" x2="590" y2="136" stroke="#58a6ff" stroke-width="2.5" marker-end="url(#syncArrow)"/>
+      <line x1="390" y1="160" x2="590" y2="160" stroke="#58a6ff" stroke-width="2.5" marker-end="url(#syncArrow)"/>
+    </svg>
+  </div>
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
