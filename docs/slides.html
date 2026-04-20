@@ -69,6 +69,34 @@ nav button {
 }
 nav button:disabled { opacity: 0.35; cursor: default; }
 nav span { color: #8b949e; font-size: 0.95rem; min-width: 5rem; text-align: center; }
+.pagination {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.page-dot {
+  min-width: 3.2rem;
+  height: 1.9rem;
+  padding: 0 0.35rem;
+  border: 1px solid #30363d;
+  border-radius: 4px;
+  background: #0d1117;
+  color: #8b949e;
+  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  cursor: pointer;
+}
+.page-dot:hover { border-color: #58a6ff; color: #c9d1d9; }
+.page-dot.active {
+  background: #1f6feb;
+  border-color: #58a6ff;
+  color: #ffffff;
+}
 </style>
 </head>
 <body>
@@ -203,7 +231,7 @@ nav span { color: #8b949e; font-size: 0.95rem; min-width: 5rem; text-align: cent
 <!-- SLIDE 8 — What Is RAG                                 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
-  <h2>What Is RAG? (Half-Technical View)</h2>
+  <h2>What Is RAG?</h2>
   <ul>
     <li><strong>RAG = Retrieval-Augmented Generation</strong>: the model looks things up before answering.</li>
     <li>Think of it as <strong>LLM + search</strong>: search finds relevant facts, the LLM explains them.</li>
@@ -331,6 +359,7 @@ nav span { color: #8b949e; font-size: 0.95rem; min-width: 5rem; text-align: cent
 <nav>
   <button id="prev" aria-label="Previous slide">◂ Prev</button>
   <span id="counter">1 / 12</span>
+  <div id="pagination" class="pagination" aria-label="Slide pagination"></div>
   <button id="next" aria-label="Next slide">Next ▸</button>
 </nav>
 
@@ -340,13 +369,30 @@ nav span { color: #8b949e; font-size: 0.95rem; min-width: 5rem; text-align: cent
   const counter = document.getElementById('counter');
   const prevBtn = document.getElementById('prev');
   const nextBtn = document.getElementById('next');
+  const pagination = document.getElementById('pagination');
   let current = 0;
+  const slideIcons = ['🏷️', '❗', '🏗️', '🧩', '🧾', '🛠️', '📚', '🔎', '💼', '📝', '🔗', '⚙️'];
+
+  const pageButtons = Array.from(slides).map(function (_, index) {
+    const btn = document.createElement('button');
+    btn.className = 'page-dot';
+    btn.type = 'button';
+    const icon = slideIcons[index] || '📄';
+    btn.setAttribute('aria-label', 'Go to slide ' + (index + 1) + ' ' + icon);
+    btn.textContent = icon + ' ' + String(index + 1);
+    btn.addEventListener('click', function () { show(index); });
+    pagination.appendChild(btn);
+    return btn;
+  });
 
   function show(index) {
     slides[current].classList.remove('active');
     current = Math.max(0, Math.min(index, slides.length - 1));
     slides[current].classList.add('active');
     counter.textContent = (current + 1) + ' / ' + slides.length;
+    pageButtons.forEach(function (btn, i) {
+      btn.classList.toggle('active', i === current);
+    });
     prevBtn.disabled = current === 0;
     nextBtn.disabled = current === slides.length - 1;
   }
