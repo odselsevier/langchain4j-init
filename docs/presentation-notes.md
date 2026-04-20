@@ -1,14 +1,14 @@
-# langchain4j-init — 5-Minute Presentation Script
+# langchain4j-init — 6.5-Minute Presentation Script
 
 > **Target audience:** Java developers and tech leads evaluating LLM integration.
-> **Duration:** ~6 minutes (12 slides)
+> **Duration:** ~6.5 minutes (13 slides)
 
 ---
 
 ## Slide 1 — Title (15 s)
 
-"Welcome. Today I'll walk you through **langchain4j-init** — 
-a repo that brings large-language-model capabilities into a single Java codebase."
+"Welcome. Today I'll walk you through **langchain4j-init** —
+Java with LangChain4j and RAG good and bad use cases overview."
 
 ---
 
@@ -28,7 +28,16 @@ proxies backed by Ollama or OpenAI. A Milvus vector store handles RAG."
 
 ---
 
-## Slide 4 — Design Patterns in Java (45 s)
+## Slide 4 — Tech Stack & Tools (40 s)
+
+"Before code patterns, here is the stack we are actually running:
+Java 17 + Maven, LangChain4j, Ollama/OpenAI models, Milvus as vector DB,
+MinIO as object storage, and etcd for metadata/coordination in the Milvus stack.
+Docker Compose makes this reproducible on any developer machine."
+
+---
+
+## Slide 5 — Design Patterns in Java (40 s)
 
 "Let me highlight four patterns we use:
 
@@ -45,7 +54,7 @@ proxies backed by Ollama or OpenAI. A Milvus vector store handles RAG."
 
 ---
 
-## Slide 5 — Code Spotlight: Structured Output (30 s)
+## Slide 6 — Code Spotlight: Structured Output (30 s)
 
 "Here's the magic: you define an interface with `@SystemMessage`, return a
 Java record, and LangChain4j handles prompt engineering, JSON parsing, and
@@ -60,7 +69,7 @@ public interface SupportExtractorService {
 
 ---
 
-## Slide 6 — Code Spotlight: Tool Calling (30 s)
+## Slide 7 — Code Spotlight: Tool Calling (30 s)
 
 "Tool calling lets the LLM invoke **your** Java methods. Annotate a method
 with `@Tool`, wire it into the AiService builder, and the model decides
@@ -73,7 +82,7 @@ public String checkInventory(String sku) { ... }
 
 ---
 
-## Slide 7 — RAG Ingestion Pipeline (30 s)
+## Slide 8 — RAG Ingestion Pipeline (30 s)
 
 "For retrieval-augmented generation we use a four-stage pipeline:
 Load → Split → Embed → Store. The `IngestionPipeline` class composes
@@ -82,7 +91,7 @@ Strategy pattern again — swap any piece independently."
 
 ---
 
-## Slide 8 — What Is RAG? (30 s)
+## Slide 9 — What Is RAG? (30 s)
 
 "RAG means retrieval-augmented generation: the model looks up relevant
 document chunks first, then writes an answer grounded in those chunks.
@@ -90,7 +99,7 @@ In plain terms: don't guess from memory, read first, then respond."
 
 ---
 
-## Slide 9 — Use Cases & Benefits (45 s)
+## Slide 10 — Use Cases & Benefits (40 s)
 
 "What are we actually presenting from a benefits perspective?
 - Support ticket triage with structured extraction -> faster routing and better SLA performance.
@@ -102,7 +111,7 @@ This is the key message: faster operations, higher answer quality, lower support
 
 ---
 
-## Slide 10 — Interactive MDX Documentation (25 s)
+## Slide 11 — Interactive MDX Documentation (20 s)
 
 "Documentation isn't an afterthought. We use MDX with embedded Mermaid
 diagrams that render in GitHub and MDX sites. Docs evolve in the same PRs
@@ -110,14 +119,14 @@ as code, so architecture does not drift."
 
 ---
 
-## Slide 11 — Java ↔ MDX Synergy (25 s)
+## Slide 12 — Java ↔ MDX Synergy (20 s)
 
 "Every major Java component has a matching visual. Update code and diagram in
 one commit. That lowers onboarding time and reduces tribal knowledge."
 
 ---
 
-## Slide 12 — Developer Experience & Testing (30 s)
+## Slide 13 — Developer Experience & Testing (30 s)
 
 "We prioritise DX:
 - `docker compose up` gives you Ollama + Milvus in seconds.

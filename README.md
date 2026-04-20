@@ -1,6 +1,6 @@
 # langchain4j-init
 
-> LangChain4j demo repo for Java developers: AI Services, Structured Output, Tool Calling, Chat Memory, and RAG ingestion.
+> Java with LangChain4j and RAG good and bad use cases overview.
 
 ## Fastest Path To Value (2-3 minutes)
 
