@@ -31,18 +31,18 @@ let dimGreen = NSColor(calibratedRed: 0.30, green: 0.82, blue: 0.44, alpha: 1.0)
 let softWhite = NSColor(calibratedRed: 0.90, green: 0.97, blue: 0.93, alpha: 1.0)
 
 let prompt = "dykyio@dev ~/Documents/GitHub/langchain4j-init % "
-let command = "java -jar target/langchain4j-init-1.0.0-SNAPSHOT.jar faq"
+let command = "java -jar target/langchain4j-init-1.0.0-SNAPSHOT.jar tools \"How many products are in stock for PRODUCT-99?\""
 
 let logs: [LogLine] = [
-    .init(at: 3.10, text: "14:22:10.104 [main] INFO  com.showcase.Main - Launching demo: faq", color: dimGreen),
-    .init(at: 3.45, text: "14:22:10.119 [main] INFO  com.showcase.features.ToolCallingDemo - === Website FAQ Demo (RAG-style) ===", color: neonBlue),
+    .init(at: 3.10, text: "14:22:10.104 [main] INFO  com.showcase.Main - Launching demo: tools", color: dimGreen),
+    .init(at: 3.45, text: "14:22:10.119 [main] INFO  com.showcase.product.features.tools.ToolCallingDemo - === Website FAQ Demo (Tool-calling + lexical FAQ retrieval) ===", color: neonBlue),
     .init(at: 4.05, text: "14:22:10.361 [main] DEBUG dev.langchain4j.service.AiServices - Building AI service: AssistantWithTools", color: dimGreen),
-    .init(at: 4.70, text: "14:22:10.624 [main] DEBUG dev.langchain4j.service.AiServices - Registered tools: WebsiteFaqTools.searchFaq, InventoryTools.checkInventory", color: dimGreen),
-    .init(at: 5.55, text: "14:22:11.052 [main] INFO  com.showcase.features.ToolCallingDemo - User -> What events are next and stock for PRODUCT-99?", color: dimGreen),
+    .init(at: 4.70, text: "14:22:10.624 [main] DEBUG dev.langchain4j.service.AiServices - Registered tools: WebsiteFaqTools.searchFaq, InventoryTools.checkInventory, InventoryTools.restockOrder", color: dimGreen),
+    .init(at: 5.55, text: "14:22:11.052 [main] INFO  com.showcase.product.features.tools.ToolCallingDemo - User -> How many products are in stock for PRODUCT-99?", color: dimGreen),
     .init(at: 6.40, text: "14:22:11.468 [main] INFO  dev.langchain4j.model.ollama.OllamaChatModel - Tool execution requested: searchFaq(userQuestion)", color: dimGreen),
     .init(at: 7.30, text: "14:22:11.924 [main] INFO  dev.langchain4j.model.ollama.OllamaChatModel - Tool execution requested: checkInventory(sku=PRODUCT-99)", color: dimGreen),
-    .init(at: 8.25, text: "14:22:12.353 [main] INFO  com.showcase.ai.InventoryTools - checkInventory(PRODUCT-99) -> SKU-PRODUCT-99: 42 products in stock", color: dimGreen),
-    .init(at: 9.60, text: "14:22:12.857 [main] INFO  com.showcase.features.ToolCallingDemo - Assistant -> Events are in the FAQ. SKU-PRODUCT-99 has 42 products in stock.", color: softWhite)
+    .init(at: 8.25, text: "14:22:12.353 [main] INFO  com.showcase.product.inventory.InventoryTools - checkInventory(PRODUCT-99) -> SKU-PRODUCT-99: 42 products in stock", color: dimGreen),
+    .init(at: 9.60, text: "14:22:12.857 [main] INFO  com.showcase.product.features.tools.ToolCallingDemo - Assistant -> SKU-PRODUCT-99 has 42 products in stock.", color: softWhite)
 ]
 
 func drawLine(_ context: CGContext, text: String, x: CGFloat, y: CGFloat, font: NSFont, color: NSColor) {

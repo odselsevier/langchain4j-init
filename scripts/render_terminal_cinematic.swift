@@ -16,8 +16,11 @@ let fps: Int32 = 30
 let duration: Double = 5.0
 let totalFrames = Int(duration * Double(fps))
 
+let formatter = DateFormatter()
+formatter.dateFormat = "yyyyMMdd-HHmmss"
+let ts = formatter.string(from: Date())
 let outputURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-    .appendingPathComponent("media/langchain4j-init-terminal-cinematic.mov")
+    .appendingPathComponent("media/\(ts)-langchain4j-init-terminal-cinematic.mov")
 
 try? FileManager.default.removeItem(at: outputURL)
 

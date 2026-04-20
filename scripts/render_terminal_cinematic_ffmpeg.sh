@@ -2,7 +2,8 @@
 set -euo pipefail
 
 mkdir -p media /tmp/langchain4j-video-text
-OUT="media/langchain4j-init-terminal-cinematic.mp4"
+TS="$(date +%Y%m%d-%H%M%S)"
+OUT="media/${TS}-langchain4j-init-terminal-cinematic.mp4"
 FONT="/System/Library/Fonts/Menlo.ttc"
 TXT_DIR="/tmp/langchain4j-video-text"
 
