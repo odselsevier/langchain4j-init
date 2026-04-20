@@ -92,7 +92,7 @@ for frame in 0..<totalFrames {
         context.setFillColor(NSColor(calibratedWhite: 0.01, alpha: 1.0).cgColor)
         context.fill(CGRect(x: 0, y: 0, width: width, height: height))
 
-        let s = CGFloat(1.0 + 0.055 * ease(min(max(t / duration, 0.0), 1.0)))
+        let s = CGFloat(1.0)
         context.saveGState()
         context.translateBy(x: CGFloat(width) * 0.5, y: CGFloat(height) * 0.5)
         context.scaleBy(x: s, y: s)
