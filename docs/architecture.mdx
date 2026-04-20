@@ -1,0 +1,91 @@
+---
+title: Architecture — AI Service Orchestration
+description: Mermaid sequence diagram showing the flow from user input through AiService, tool calling, and response generation.
+---
+
+# Architecture: AI Service Orchestration
+
+## Overview
+
+LangChain4j's `AiServices` acts as a dynamic proxy that sits between application
+code and the LLM provider. When a method on an AI Service interface is called:
+
+1. The framework builds a prompt from the method signature, annotations, and arguments.
+2. The prompt is sent to the configured LLM (OpenAI, Ollama, etc.).
+3. If the model decides to invoke a **tool**, LangChain4j calls the corresponding
+   Java method and feeds the result back into the model.
+4. The final response is parsed into the declared return type (String, POJO, etc.).
+
+## Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant App as Main.java
+    participant AI as AiService Proxy
+    participant LLM as ChatLanguageModel<br/>(OpenAI / Ollama)
+    participant Tool as InventoryTools.java
+    participant Mem as ChatMemory
+
+    User->>App: "How many WIDGET-99 in stock?"
+    App->>AI: assistant.chat(userMessage)
+    AI->>Mem: load previous messages
+    Mem-->>AI: conversation history
+    AI->>LLM: prompt + history + tool definitions
+    LLM-->>AI: tool_call: checkInventory("WIDGET-99")
+    AI->>Tool: checkInventory("WIDGET-99")
+    Tool-->>AI: "SKU-WIDGET-99: 42 units in stock"
+    AI->>LLM: tool result
+    LLM-->>AI: "We have 42 units of WIDGET-99."
+    AI->>Mem: persist new messages
+    AI-->>App: "We have 42 units of WIDGET-99."
+    App-->>User: display response
+```
+
+## Structured Output Flow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant App as Main.java
+    participant AI as SupportExtractorService Proxy
+    participant LLM as ChatLanguageModel
+
+    User->>App: raw support email text
+    App->>AI: extractor.extract(rawMessage)
+    AI->>LLM: system prompt + user message
+    LLM-->>AI: JSON with extracted fields
+    AI->>AI: deserialise JSON → TicketDetails record
+    AI-->>App: TicketDetails POJO
+    App-->>User: structured ticket data
+```
+
+## Component Overview
+
+```mermaid
+graph LR
+    subgraph Application
+        Main[Main.java CLI]
+        Demos[Feature Demos]
+    end
+
+    subgraph AI Layer
+        AiSvc[AiService Interfaces]
+        Tools[Tool Definitions]
+        Memory[ChatMemory]
+    end
+
+    subgraph Infrastructure
+        OpenAI[OpenAI GPT-4o]
+        Ollama[Ollama Local LLM]
+        Milvus[Milvus Vector DB]
+    end
+
+    Main --> Demos
+    Demos --> AiSvc
+    AiSvc --> Tools
+    AiSvc --> Memory
+    AiSvc --> OpenAI
+    AiSvc --> Ollama
+    Main --> Milvus
+```

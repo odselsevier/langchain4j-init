@@ -1,0 +1,17 @@
+LangChain4j is a Java implementation of the LangChain framework for building
+applications powered by large language models (LLMs). It provides high-level
+abstractions such as AI Services, tool calling, chat memory, and retrieval-
+augmented generation (RAG).
+
+Key features include:
+- Declarative AI Services via annotated Java interfaces
+- Automatic structured output extraction into POJOs
+- Built-in support for OpenAI, Ollama, and many other LLM providers
+- Embedding stores for vector similarity search (Milvus, Weaviate, etc.)
+- Document ingestion pipelines with configurable chunking strategies
+- Tool calling that lets the LLM invoke Java methods dynamically
+- Chat memory for multi-turn conversation persistence
+
+This sample document is used to demonstrate the RAG ingestion pipeline.
+The pipeline reads this file, splits it into chunks, generates embeddings
+for each chunk, and stores them in a vector database for later retrieval.

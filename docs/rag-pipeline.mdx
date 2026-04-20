@@ -1,0 +1,85 @@
+---
+title: RAG Pipeline — Document Ingestion
+description: Mermaid flowchart explaining how documents are loaded, chunked, embedded, and stored.
+---
+
+# RAG Pipeline: Document Ingestion
+
+## Overview
+
+The Retrieval-Augmented Generation (RAG) pipeline enriches LLM responses with
+knowledge from local documents. The ingestion phase runs **offline** and
+prepares the vector store before any user queries arrive.
+
+### Pipeline stages
+
+| Stage       | Component                | Description                                                |
+|-------------|--------------------------|------------------------------------------------------------|
+| **Load**    | `DocumentLoaderUtil`     | Reads `.txt` files from a local directory                  |
+| **Split**   | `DocumentSplitters`      | Breaks documents into overlapping chunks (recursive split) |
+| **Embed**   | `EmbeddingModel`         | Converts each chunk into a dense vector                    |
+| **Store**   | `EmbeddingStoreIngestor` | Persists vectors + text in Milvus (or in-memory for dev)   |
+
+## Ingestion Flowchart
+
+```mermaid
+flowchart TD
+    A[📂 Local Documents<br/>src/main/resources/documents] -->|DocumentLoaderUtil| B[Document objects]
+    B -->|DocumentSplitters.recursive| C[Text Segments<br/>chunk size=300, overlap=30]
+    C -->|EmbeddingModel.embedAll| D[Embedding vectors<br/>float arrays]
+    D -->|EmbeddingStoreIngestor| E[(Vector Store<br/>Milvus / InMemory)]
+
+    style A fill:#e1f5fe
+    style E fill:#c8e6c9
+```
+
+## Retrieval Flow (Query-Time)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant App as Application
+    participant EM as EmbeddingModel
+    participant VS as Vector Store
+    participant LLM as ChatLanguageModel
+
+    User->>App: "What is tool calling?"
+    App->>EM: embed(query)
+    EM-->>App: query vector
+    App->>VS: search(queryVector, topK=3)
+    VS-->>App: relevant text segments
+    App->>LLM: prompt + context segments + user query
+    LLM-->>App: augmented answer
+    App-->>User: display answer
+```
+
+## Configuration
+
+All tuning knobs live in `src/main/resources/application.properties`:
+
+```properties
+rag.chunk.size=300
+rag.chunk.overlap=30
+rag.documents.path=src/main/resources/documents
+milvus.host=localhost
+milvus.port=19530
+milvus.collection.name=langchain4j_docs
+```
+
+## Deep Dive: AI Service Lifecycle
+
+```mermaid
+stateDiagram-v2
+    [*] --> InterfaceDeclared : Define @SystemMessage / @UserMessage
+    InterfaceDeclared --> ProxyCreated : AiServices.create() or .builder().build()
+    ProxyCreated --> MethodInvoked : caller invokes interface method
+    MethodInvoked --> PromptAssembled : framework builds prompt from annotations & args
+    PromptAssembled --> LLMCalled : send to ChatLanguageModel
+    LLMCalled --> ToolCallDetected : model returns tool_call?
+    ToolCallDetected --> JavaMethodExecuted : yes → invoke @Tool method
+    JavaMethodExecuted --> LLMCalled : feed tool result back
+    ToolCallDetected --> ResponseParsed : no → parse final answer
+    LLMCalled --> ResponseParsed
+    ResponseParsed --> ReturnTyped : deserialise into POJO / String
+    ReturnTyped --> [*]
+```
