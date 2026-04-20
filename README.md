@@ -18,10 +18,11 @@ mvn -q -DskipTests package
 
 # 4) Run one high-signal demo
 java -jar target/langchain4j-init-1.0.0-SNAPSHOT.jar tools
-# alternatives: extract | memory
+# alternatives: fit | extract | memory
 ```
 
 What you should see:
+- `fit`: code-backed rubric for good vs bad LangChain4j use cases
 - `tools`: model can call Java methods (`@Tool`) to answer with backend data
 - `extract`: unstructured support text becomes a typed Java record
 - `memory`: multi-turn context retention
@@ -62,6 +63,7 @@ java -jar target/langchain4j-init-1.0.0-SNAPSHOT.jar ingest
 
 | Developer Problem | Demo | Immediate Benefit |
 |---|---|---|
+| "Should we use LangChain4j here?" | `fit` | Code-backed good vs bad use-case rubric |
 | "I need typed output, not string parsing." | `extract` | Structured data extraction into Java records |
 | "I need model + backend actions." | `tools` | Tool-calling over Java methods (`@Tool`) |
 | "I need context over multiple turns." | `memory` | Conversation continuity via chat memory |
@@ -85,9 +87,17 @@ java -jar target/langchain4j-init-1.0.0-SNAPSHOT.jar ingest
 
 ## Important Demo Notes
 
+- RAG was introduced in 2020 in the paper "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks" (Patrick Lewis et al., then at Facebook AI).
+- Adoption accelerated massively after 2022, as teams looked for ways to ground LLM outputs with external knowledge in the ChatGPT era.
 - `InventoryTools` uses mocked data (`"42 units in stock"`) to demonstrate tool-calling mechanics.
 - Current `ingest` demo stores embeddings in `InMemoryEmbeddingStore` for simplicity.
 - Milvus is provided in `docker-compose.yml` as production-like infrastructure for extension.
+
+## Current Status
+
+- Yes, the repo now has relevant code + documentation aligned with this overview.
+- Remaining caveat (intentional): ingestion still uses in-memory store for demo simplicity, and docs already state that.
+- `FIX`: If you want to switch from overview mode to production mode, replace the in-memory embedding store with a real vector DB-backed store in the ingestion path.
 
 ## Project Structure
 
@@ -100,7 +110,7 @@ java -jar target/langchain4j-init-1.0.0-SNAPSHOT.jar ingest
 │   │   ├── java/com/showcase
 │   │   │   ├── ai/                 # AiService interfaces & tool definitions
 │   │   │   ├── rag/                # Ingestion pipeline components
-│   │   │   ├── features/           # Demos: extract, tools, memory
+│   │   │   ├── features/           # Demos: fit, extract, tools, memory
 │   │   │   └── Main.java           # CLI entry point
 │   │   └── resources/
 │   │       ├── application.properties
@@ -110,7 +120,7 @@ java -jar target/langchain4j-init-1.0.0-SNAPSHOT.jar ingest
 └── docs
     ├── architecture.mdx            # Mermaid diagrams: AI service flow
     ├── rag-pipeline.mdx            # Mermaid diagrams: RAG ingestion flow
-    ├── presentation-notes.md       # 12-slide speaker notes
+    ├── presentation-notes.md       # 13-slide speaker notes
     └── slides.html                 # HTML slide deck
 ```
 
@@ -131,5 +141,5 @@ mvn verify
 
 - [Architecture - AI Service Orchestration](docs/architecture.mdx)
 - [RAG Pipeline - Document Ingestion](docs/rag-pipeline.mdx)
-- [5-Minute Presentation - Speaker Notes](docs/presentation-notes.md)
+- [6.5-Minute Presentation - Speaker Notes](docs/presentation-notes.md)
 - [Slide Deck (HTML)](docs/slides.html) - open in any browser, navigate with arrow keys

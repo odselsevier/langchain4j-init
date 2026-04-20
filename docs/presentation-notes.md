@@ -12,11 +12,12 @@ Java with LangChain4j and RAG good and bad use cases overview."
 
 ---
 
-## Slide 2 — The Problem (30 s)
+## Slide 2 — RAG in 2026 Meme (30 s)
 
-"Most LLM demos are Python notebooks. Enterprise teams need something that
-fits their existing Java stack — strong types, testability, and CI/CD.
-That's the gap this project fills."
+"Light smile moment:
+people say 'RAG AI is too late in 2026'. That's only true for hype-only demos.
+In practice, RAG still matters when paired with tool-calling, memory, and
+evaluation discipline."
 
 ---
 
@@ -102,6 +103,7 @@ In plain terms: don't guess from memory, read first, then respond."
 ## Slide 10 — Use Cases & Benefits (40 s)
 
 "What are we actually presenting from a benefits perspective?
+- LangChain4j fit rubric (`fit`) -> faster architecture decisions, less over-engineering.
 - Support ticket triage with structured extraction -> faster routing and better SLA performance.
 - Inventory-aware assistant via tool-calling -> real-time answers and fewer escalations.
 - Knowledge Q&A over internal docs via RAG -> more grounded answers, fewer hallucinations.
@@ -132,7 +134,7 @@ one commit. That lowers onboarding time and reduces tribal knowledge."
 - `docker compose up` gives you Ollama + Milvus in seconds.
 - Unit tests run with a fake embedding model — no Docker needed.
 - Integration tests use **Testcontainers** to spin up Ollama automatically.
-- A single CLI entry point lets you run any demo: `extract`, `tools`,
+- A single CLI entry point lets you run any demo: `fit`, `extract`, `tools`,
   `memory`, `ingest`, or `all`."
 
 ---

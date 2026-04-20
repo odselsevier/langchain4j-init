@@ -3,6 +3,7 @@ package com.showcase;
 import com.showcase.features.ChatMemoryDemo;
 import com.showcase.features.StructuredOutputDemo;
 import com.showcase.features.ToolCallingDemo;
+import com.showcase.features.UseCaseFitDemo;
 import com.showcase.rag.DocumentLoaderUtil;
 import com.showcase.rag.IngestionPipeline;
 import dev.langchain4j.data.document.Document;
@@ -27,6 +28,7 @@ import java.util.Properties;
  *
  * <p>Usage: {@code java -jar langchain4j-init.jar [demo]}
  * <ul>
+ *   <li>{@code fit}      — Good vs bad LangChain4j use-case rubric</li>
  *   <li>{@code extract}  — Structured output extraction</li>
  *   <li>{@code tools}    — Tool calling</li>
  *   <li>{@code memory}   — Chat memory persistence</li>
@@ -54,6 +56,7 @@ public class Main {
         String demo = args.length > 0 ? args[0] : "all";
 
         switch (demo) {
+            case "fit"     -> UseCaseFitDemo.run();
             case "extract" -> StructuredOutputDemo.run(chatModel);
             case "tools"   -> ToolCallingDemo.run(chatModel);
             case "memory"  -> ChatMemoryDemo.run(chatModel);
@@ -66,6 +69,7 @@ public class Main {
                                String ollamaUrl,
                                String modelName,
                                Properties props) throws Exception {
+        UseCaseFitDemo.run();
         StructuredOutputDemo.run(chatModel);
         ToolCallingDemo.run(chatModel);
         ChatMemoryDemo.run(chatModel);

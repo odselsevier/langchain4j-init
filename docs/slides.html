@@ -107,6 +107,39 @@ body::before {
 .rag-caption { margin-top: 0.8rem; font-size: 1.02rem; color: var(--text-low); }
 .vector-panel { margin-top: 1rem; width: 100%; max-width: 60rem; }
 .vector-panel svg { width: 100%; height: auto; display: block; }
+.logo-strip {
+  margin-top: 1rem;
+  width: 100%;
+  max-width: 62rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+.logo-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(15, 23, 39, 0.75);
+  color: var(--text-mid);
+  font-size: 0.82rem;
+  justify-content: center;
+}
+.logo-dot {
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #07101a;
+  font-weight: 800;
+  font-size: 0.65rem;
+}
+.lc4j-logo { margin-top: 1rem; width: 100%; max-width: 38rem; }
+.lc4j-logo svg { width: 100%; height: auto; display: block; }
 
 /* ── Code blocks ───────────────────────────────────────── */
 pre {
@@ -265,15 +298,27 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 <!-- SLIDE 2 — The Problem                                 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
-  <h2>The Problem</h2>
-  <ul>
-    <li>Most LLM demos live in Python notebooks — hard to productionise</li>
-    <li>Enterprise Java teams need <strong>strong types</strong>, testability, and CI/CD</li>
-    <li>Documentation drifts away from code in separate wikis</li>
-  </ul>
-  <p style="margin-top:2rem;font-size:1.5rem;color:var(--primary);">
-    <strong>langchain4j-init</strong> bridges this gap.
+  <h2>RAG in 2026 :)</h2>
+  <h3>“RAG AI? too late” meme, but still useful when done right</h3>
+  <div class="vector-panel">
+    <svg viewBox="0 0 980 300" role="img" aria-label="Meme style comparison old RAG hype vs practical 2026 stack">
+      <rect x="40" y="40" width="400" height="220" rx="14" fill="#161b22" stroke="#30363d"/>
+      <text x="240" y="78" fill="#e6edf3" font-size="24" text-anchor="middle" font-family="Space Grotesk, sans-serif">2019-2023</text>
+      <text x="240" y="110" fill="#8b949e" font-size="16" text-anchor="middle" font-family="Manrope, sans-serif">“Just add RAG bro”</text>
+      <text x="240" y="150" fill="#ff7b72" font-size="44" text-anchor="middle">📈🔥</text>
+      <text x="240" y="190" fill="#8b949e" font-size="14" text-anchor="middle" font-family="IBM Plex Mono, monospace">hype without operations</text>
+
+      <rect x="540" y="40" width="400" height="220" rx="14" fill="#0f2a46" stroke="#58a6ff"/>
+      <text x="740" y="78" fill="#e6edf3" font-size="24" text-anchor="middle" font-family="Space Grotesk, sans-serif">2026 reality</text>
+      <text x="740" y="110" fill="#a5d6ff" font-size="16" text-anchor="middle" font-family="Manrope, sans-serif">RAG + tools + memory + evals</text>
+      <text x="740" y="152" fill="#6ef3a5" font-size="42" text-anchor="middle">🧠⚙️📚✅</text>
+      <text x="740" y="192" fill="#a5d6ff" font-size="14" text-anchor="middle" font-family="IBM Plex Mono, monospace">production > hype</text>
+    </svg>
+  </div>
+  <p style="margin-top:1.2rem;color:var(--primary);">
+    Smile moment: <strong>RAG alone is late, RAG with good engineering is not.</strong>
   </p>
+  <p style="margin-top:0.6rem;color:var(--text-low);">Tech stack is coming next (including vector DB + object storage).</p>
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
@@ -334,10 +379,38 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 4 — Tech Stack                                  -->
+<!-- SLIDE 4 — What Is LangChain4j                         -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
-  <h2>Tech Stack &amp; Tools Used</h2>
+  <h2>What Is LangChain4j?</h2>
+  <ul>
+    <li><strong>LangChain4j</strong> is a Java framework for building LLM-powered apps with clean abstractions.</li>
+    <li>It gives you <strong>AiServices</strong>, <strong>tool-calling</strong>, <strong>chat memory</strong>, and <strong>RAG</strong> building blocks.</li>
+    <li>Goal: ship AI features in Java without writing glue code for every model interaction.</li>
+  </ul>
+  <div class="lc4j-logo">
+    <svg viewBox="0 0 760 200" role="img" aria-label="LangChain4j logo style mark">
+      <defs>
+        <linearGradient id="lc4jGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#00d4ff"></stop>
+          <stop offset="100%" stop-color="#6ef3a5"></stop>
+        </linearGradient>
+      </defs>
+      <rect x="20" y="32" width="140" height="140" rx="28" fill="#0f1727" stroke="#24304a"></rect>
+      <path d="M55 80 h45 a18 18 0 0 1 18 18 v4 a18 18 0 0 1-18 18 h-8" fill="none" stroke="url(#lc4jGrad)" stroke-width="10" stroke-linecap="round"></path>
+      <path d="M125 128 h-35 a18 18 0 0 1-18-18 v-4 a18 18 0 0 1 18-18 h8" fill="none" stroke="#7aa2ff" stroke-width="10" stroke-linecap="round"></path>
+      <text x="190" y="103" fill="#eaf1ff" font-size="52" font-weight="700" font-family="Space Grotesk, sans-serif">LangChain4j</text>
+      <text x="190" y="136" fill="#8fa0c6" font-size="18" font-family="Manrope, sans-serif">Java-first orchestration for LLM applications</text>
+    </svg>
+  </div>
+  <p style="margin-top:0.7rem;color:var(--text-low);">Think: Spring-style ergonomics for LLM workflows.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SLIDE 5 — Tech Stack                                  -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="slide">
+  <h2>Tech Stack &amp; Tools Used (Vector DB + Object Storage)</h2>
   <table>
     <tr><th>Layer</th><th>Tool</th><th>Purpose</th></tr>
     <tr><td>Language + Build</td><td>Java 17, Maven</td><td>Core app + reproducible builds</td></tr>
@@ -381,10 +454,20 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
       <line x1="730" y1="125" x2="770" y2="125" stroke="#58a6ff" stroke-width="2.8" marker-end="url(#stackArrow)"/>
     </svg>
   </div>
+  <div class="logo-strip">
+    <div class="logo-pill"><span class="logo-dot" style="background:#f89820;">J</span> Java</div>
+    <div class="logo-pill"><span class="logo-dot" style="background:#c71a36; color:#fff;">M</span> Maven</div>
+    <div class="logo-pill"><span class="logo-dot" style="background:#00d4ff;">LC</span> LangChain4j</div>
+    <div class="logo-pill"><span class="logo-dot" style="background:#111; color:#fff;">O</span> Ollama</div>
+    <div class="logo-pill"><span class="logo-dot" style="background:#58a6ff;">OA</span> OpenAI</div>
+    <div class="logo-pill"><span class="logo-dot" style="background:#6ef3a5;">MV</span> Milvus</div>
+    <div class="logo-pill"><span class="logo-dot" style="background:#c72e29; color:#fff;">MO</span> MinIO</div>
+    <div class="logo-pill"><span class="logo-dot" style="background:#7aa2ff;">ET</span> etcd</div>
+  </div>
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 5 — Design Patterns                             -->
+<!-- SLIDE 6 — Design Patterns                             -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Design Patterns Used</h2>
@@ -429,7 +512,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 6 — Structured Output                           -->
+<!-- SLIDE 7 — Structured Output                           -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Structured Output Extraction</h2>
@@ -446,7 +529,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 7 — Tool Calling                                -->
+<!-- SLIDE 8 — Tool Calling                                -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Tool Calling</h2>
@@ -466,7 +549,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 8 — RAG Pipeline                                -->
+<!-- SLIDE 9 — RAG Pipeline                                -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>RAG Ingestion Pipeline</h2>
@@ -522,7 +605,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 9 — What Is RAG                                 -->
+<!-- SLIDE 10 — What Is RAG                                 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>What Is RAG?</h2>
@@ -568,12 +651,17 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 10 — Use Cases & Benefits                        -->
+<!-- SLIDE 11 — Use Cases & Benefits                        -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Use Cases We’re Presenting (Benefits View)</h2>
   <table>
     <tr><th>Use Case</th><th>Demo Piece</th><th>Business Benefit</th></tr>
+    <tr>
+      <td>LangChain4j fit decision</td>
+      <td><code>fit</code> demo rubric</td>
+      <td>Avoid over-engineering and pick the right abstraction early</td>
+    </tr>
     <tr>
       <td>Support ticket triage</td>
       <td><code>SupportExtractorService</code></td>
@@ -633,7 +721,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 11 — MDX Documentation                           -->
+<!-- SLIDE 12 — MDX Documentation                           -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Interactive MDX Documentation</h2>
@@ -647,7 +735,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 12 — Java ↔ MDX Synergy                         -->
+<!-- SLIDE 13 — Java ↔ MDX Synergy                         -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Java ↔ MDX Synergy</h2>
@@ -689,7 +777,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 13 — DX & Testing                               -->
+<!-- SLIDE 14 — DX & Testing                               -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Developer Experience &amp; Testing</h2>
@@ -697,7 +785,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
     <li><code>docker compose up</code> → Ollama + Milvus in seconds</li>
     <li>Unit tests with <strong>fake embedding model</strong> — no Docker required</li>
     <li>Integration tests via <strong>Testcontainers</strong> — Ollama in a container</li>
-    <li>Single CLI: <code>java -jar … extract | tools | memory | ingest</code></li>
+    <li>Single CLI: <code>java -jar … fit | extract | tools | memory | ingest</code></li>
     <li>Java 17 records, text blocks, sealed switch — modern &amp; readable</li>
   </ul>
   <p style="margin-top:1.5rem;font-size:1.5rem;color:var(--primary);">
@@ -711,7 +799,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 <!-- ── Navigation ────────────────────────────────────────── -->
 <nav>
   <button id="prev" aria-label="Previous slide">◂ Prev</button>
-  <span id="counter">1 / 13</span>
+  <span id="counter">1 / 14</span>
   <div id="pagination" class="pagination" aria-label="Slide pagination"></div>
   <button id="next" aria-label="Next slide">Next ▸</button>
 </nav>
@@ -724,7 +812,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
   const nextBtn = document.getElementById('next');
   const pagination = document.getElementById('pagination');
   let current = 0;
-  const slideIcons = ['🏷️', '❗', '🏗️', '🧰', '🧩', '🧾', '🛠️', '📚', '🔎', '💼', '📝', '🔗', '⚙️'];
+  const slideIcons = ['🏷️', '😂', '🏗️', '🔗', '🧰', '🧩', '🧾', '🛠️', '📚', '🔎', '💼', '📝', '🔗', '⚙️'];
 
   const pageButtons = Array.from(slides).map(function (_, index) {
     const btn = document.createElement('button');
