@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>langchain4j-init — Slide Deck</title>
+<style>
+/* ── Reset & base ──────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #0d1117; color: #e6edf3; }
+body { display: flex; flex-direction: column; }
+
+/* ── Slide container ───────────────────────────────────── */
+.deck { flex: 1; position: relative; overflow: hidden; }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 4rem 6rem; text-align: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+}
+.slide.active { opacity: 1; pointer-events: auto; }
+.slide h1 { font-size: 2.8rem; margin-bottom: 0.6rem; color: #58a6ff; }
+.slide h2 { font-size: 2.2rem; margin-bottom: 0.5rem; color: #58a6ff; }
+.slide h3 { font-size: 1.3rem; color: #8b949e; margin-bottom: 1.2rem; font-weight: 400; }
+.slide p, .slide li { font-size: 1.35rem; line-height: 1.7; color: #c9d1d9; }
+.slide ul { text-align: left; max-width: 52rem; margin: 0 auto; list-style: none; }
+.slide ul li { padding-left: 1.6rem; position: relative; margin-bottom: 0.6rem; }
+.slide ul li::before { content: '▸'; position: absolute; left: 0; color: #58a6ff; }
+.slide code { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+.slide .badge { display: inline-block; background: #1f6feb; color: #fff; font-size: 0.85rem; padding: 0.2rem 0.7rem; border-radius: 999px; margin-right: 0.4rem; }
+
+/* ── Code blocks ───────────────────────────────────────── */
+pre {
+  background: #161b22; border: 1px solid #30363d; border-radius: 8px;
+  padding: 1.4rem 1.8rem; text-align: left; font-size: 1.05rem; line-height: 1.6;
+  max-width: 56rem; width: 100%; overflow-x: auto; margin-top: 1rem;
+}
+pre code { color: #e6edf3; }
+.kw { color: #ff7b72; } /* keyword */
+.str { color: #a5d6ff; } /* string */
+.ann { color: #d2a8ff; } /* annotation */
+.typ { color: #79c0ff; } /* type */
+.cmt { color: #8b949e; } /* comment */
+
+/* ── Diagram placeholder (Mermaid rendered as ASCII-style) */
+.diagram {
+  background: #161b22; border: 1px solid #30363d; border-radius: 8px;
+  padding: 1.6rem 2rem; text-align: left; font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem; line-height: 1.5; max-width: 52rem; width: 100%;
+  margin-top: 1rem; color: #8b949e; white-space: pre;
+}
+
+/* ── Table ─────────────────────────────────────────────── */
+table { border-collapse: collapse; margin-top: 1rem; font-size: 1.15rem; }
+th, td { padding: 0.55rem 1.2rem; border: 1px solid #30363d; text-align: left; }
+th { background: #161b22; color: #58a6ff; }
+
+/* ── Navigation bar ────────────────────────────────────── */
+nav {
+  display: flex; justify-content: center; align-items: center; gap: 1.2rem;
+  padding: 0.8rem; background: #161b22; border-top: 1px solid #30363d;
+}
+nav button {
+  background: #1f6feb; color: #fff; border: none; border-radius: 6px;
+  padding: 0.45rem 1.4rem; font-size: 1rem; cursor: pointer;
+}
+nav button:disabled { opacity: 0.35; cursor: default; }
+nav span { color: #8b949e; font-size: 0.95rem; min-width: 5rem; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SLIDE 1 — Title                                       -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="slide active">
+  <h1>langchain4j-init</h1>
+  <h3>Production-Ready LangChain4j Showcase</h3>
+  <p>AI Services · RAG · Tool Calling · Chat Memory</p>
+  <p style="margin-top:2rem;font-size:1rem;color:#8b949e;">Java 17+ &nbsp;|&nbsp; LangChain4j 1.0-beta3 &nbsp;|&nbsp; MDX Docs</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SLIDE 2 — The Problem                                 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="slide">
+  <h2>The Problem</h2>
+  <ul>
+    <li>Most LLM demos live in Python notebooks — hard to productionise</li>
+    <li>Enterprise Java teams need <strong>strong types</strong>, testability, and CI/CD</li>
+    <li>Documentation drifts away from code in separate wikis</li>
+  </ul>
+  <p style="margin-top:2rem;font-size:1.5rem;color:#58a6ff;">
+    <strong>langchain4j-init</strong> bridges this gap.
+  </p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SLIDE 3 — Architecture                                -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="slide">
+  <h2>Architecture at a Glance</h2>
+<div class="diagram">┌─────────────┐     ┌──────────────────┐     ┌──────────────────┐
+│  Main.java  │────▸│  Feature Demos   │────▸│  AiService Proxy │
+│  CLI entry  │     │  extract / tools │     │  (dynamic proxy) │
+└─────────────┘     │  memory / ingest │     └────────┬─────────┘
+                    └──────────────────┘              │
+                          ┌───────────────────────────┼──────────────┐
+                          ▼                           ▼              ▼
+                   ┌─────────────┐          ┌──────────────┐  ┌──────────┐
+                   │ Tool Defs   │          │ ChatMemory   │  │ LLM      │
+                   │ @Tool       │          │ Window(10)   │  │ Ollama / │
+                   └─────────────┘          └──────────────┘  │ OpenAI   │
+                                                              └──────────┘</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SLIDE 4 — Design Patterns                             -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="slide">
+  <h2>Design Patterns Used</h2>
+  <table>
+    <tr><th>Pattern</th><th>Where</th></tr>
+    <tr><td><span class="badge">Dynamic Proxy</span></td>
+        <td><code>AiServices.create(SupportExtractorService.class, model)</code></td></tr>
+    <tr><td><span class="badge">Builder</span></td>
+        <td><code>OllamaChatModel.builder()…build()</code> &amp; <code>AiServices.builder()</code></td></tr>
+    <tr><td><span class="badge">Strategy</span></td>
+        <td><code>IngestionPipeline</code> — swap <code>EmbeddingModel</code> / <code>EmbeddingStore</code></td></tr>
+    <tr><td><span class="badge">Value Object</span></td>
+        <td><code>TicketDetails</code> Java record — immutable structured output</td></tr>
+  </table>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SLIDE 5 — Structured Output                           -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="slide">
+  <h2>Structured Output Extraction</h2>
+  <p>Declare an interface — get a strongly-typed POJO back.</p>
+<pre><code><span class="kw">public interface</span> <span class="typ">SupportExtractorService</span> {
+
+    <span class="ann">@SystemMessage</span>(<span class="str">"""
+        You are a support-ticket classifier. Extract the
+        customer name, issue category, severity, and summary.
+        """</span>)
+    <span class="typ">TicketDetails</span> <span class="kw">extract</span>(<span class="ann">@UserMessage</span> <span class="typ">String</span> rawMessage);
+}</code></pre>
+  <p style="margin-top:1rem;color:#8b949e;">Zero boilerplate — no prompt templates, no JSON parsing.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SLIDE 6 — Tool Calling                                -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="slide">
+  <h2>Tool Calling</h2>
+  <p>The LLM invokes <strong>your</strong> Java methods for real-time data.</p>
+<pre><code><span class="kw">public class</span> <span class="typ">InventoryTools</span> {
+
+    <span class="ann">@Tool</span>(<span class="str">"Get current inventory count for a given SKU"</span>)
+    <span class="kw">public</span> <span class="typ">String</span> checkInventory(<span class="typ">String</span> sku) {
+        <span class="kw">return</span> <span class="str">"SKU-%s: 42 units in stock"</span>.formatted(sku);
+    }
+}</code></pre>
+<pre><code><span class="cmt">// Wire it in</span>
+<span class="typ">AssistantWithTools</span> assistant = <span class="typ">AiServices</span>.builder(<span class="typ">AssistantWithTools</span>.<span class="kw">class</span>)
+        .chatLanguageModel(model)
+        .tools(<span class="kw">new</span> <span class="typ">InventoryTools</span>())
+        .build();</code></pre>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SLIDE 7 — RAG Pipeline                                -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="slide">
+  <h2>RAG Ingestion Pipeline</h2>
+<div class="diagram">  📂 Local Documents
+        │
+        ▼  DocumentLoaderUtil
+  ┌────────────┐
+  │  Document   │  ──▸  DocumentSplitters.recursive(300, 30)
+  └────────────┘
+        │
+        ▼  chunks
+  ┌────────────┐
+  │  Segments   │  ──▸  EmbeddingModel.embedAll()
+  └────────────┘
+        │
+        ▼  vectors
+  ┌────────────┐
+  │  Milvus /  │  ◀──  EmbeddingStoreIngestor
+  │  InMemory  │
+  └────────────┘</div>
+  <p style="margin-top:1rem;">Strategy pattern — swap any stage independently.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SLIDE 8 — MDX Documentation                           -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="slide">
+  <h2>Interactive MDX Documentation</h2>
+  <ul>
+    <li><strong>architecture.mdx</strong> — Sequence diagrams for AI Service orchestration</li>
+    <li><strong>rag-pipeline.mdx</strong> — Flowcharts &amp; state diagrams for ingestion</li>
+    <li>Embedded <strong>Mermaid</strong> renders live in GitHub and Docusaurus / Nextra</li>
+    <li>Docs live in <code>docs/</code> — same repo, same PR, same review</li>
+  </ul>
+  <p style="margin-top:1.5rem;">No stale wikis. Documentation evolves with the code.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SLIDE 9 — Java ↔ MDX Synergy                         -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="slide">
+  <h2>Java ↔ MDX Synergy</h2>
+  <table>
+    <tr><th>Java Layer</th><th>MDX Visual</th></tr>
+    <tr><td><code>SupportExtractorService</code></td><td>Structured Output sequence diagram</td></tr>
+    <tr><td><code>AssistantWithTools</code> + <code>InventoryTools</code></td><td>Tool-calling sequence diagram</td></tr>
+    <tr><td><code>IngestionPipeline</code></td><td>RAG ingestion flowchart</td></tr>
+    <tr><td><code>AiServices</code> lifecycle</td><td>State machine diagram</td></tr>
+  </table>
+  <p style="margin-top:1.5rem;">Change code → update diagram → <strong>one commit, one review</strong>.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SLIDE 10 — DX & Testing                               -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="slide">
+  <h2>Developer Experience &amp; Testing</h2>
+  <ul>
+    <li><code>docker compose up</code> → Ollama + Milvus in seconds</li>
+    <li>Unit tests with <strong>fake embedding model</strong> — no Docker required</li>
+    <li>Integration tests via <strong>Testcontainers</strong> — Ollama in a container</li>
+    <li>Single CLI: <code>java -jar … extract | tools | memory | ingest</code></li>
+    <li>Java 17 records, text blocks, sealed switch — modern &amp; readable</li>
+  </ul>
+  <p style="margin-top:1.5rem;font-size:1.5rem;color:#58a6ff;">
+    Clean patterns · Visual docs · Frictionless DX
+  </p>
+  <p style="margin-top:1rem;color:#8b949e;">Thank you! 🎉</p>
+</section>
+
+</div><!-- /deck -->
+
+<!-- ── Navigation ────────────────────────────────────────── -->
+<nav>
+  <button id="prev" aria-label="Previous slide">◂ Prev</button>
+  <span id="counter">1 / 10</span>
+  <button id="next" aria-label="Next slide">Next ▸</button>
+</nav>
+
+<script>
+(function () {
+  const slides = document.querySelectorAll('.slide');
+  const counter = document.getElementById('counter');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  let current = 0;
+
+  function show(index) {
+    slides[current].classList.remove('active');
+    current = Math.max(0, Math.min(index, slides.length - 1));
+    slides[current].classList.add('active');
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === slides.length - 1;
+  }
+
+  prevBtn.addEventListener('click', function () { show(current - 1); });
+  nextBtn.addEventListener('click', function () { show(current + 1); });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === ' ')  { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft')                      { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home')                            { e.preventDefault(); show(0); }
+    if (e.key === 'End')                             { e.preventDefault(); show(slides.length - 1); }
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>

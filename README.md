@@ -77,3 +77,5 @@ mvn test
 
 - [Architecture — AI Service Orchestration](docs/architecture.mdx)
 - [RAG Pipeline — Document Ingestion](docs/rag-pipeline.mdx)
+- [5-Minute Presentation — Speaker Notes](docs/presentation-notes.md)
+- [Slide Deck (HTML)](docs/slides.html) — open in any browser, navigate with arrow keys
