@@ -21,7 +21,7 @@ evaluation discipline."
 
 ---
 
-## Slide 3 — Architecture at a Glance (30 s)
+## Slide 3 — Architecture (30 s)
 
 "The architecture has three layers. A CLI entry point delegates to feature
 demos. Those demos talk to **AiService** interfaces — which are dynamic

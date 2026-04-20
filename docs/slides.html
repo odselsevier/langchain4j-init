@@ -135,7 +135,7 @@ body::before {
 }
 .lc4j-logo { margin-top: 1rem; width: 100%; max-width: 38rem; }
 .lc4j-logo img {
-  width: 100%;
+  max-width: 100%;
   height: auto;
   display: block;
   border: 1px solid var(--border);
@@ -225,6 +225,15 @@ nav button {
 }
 nav button:hover { background: rgba(0, 212, 255, 0.25); transform: translateY(-1px); }
 nav button:disabled { opacity: 0.35; cursor: default; }
+.icon-btn {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-align: center; }
 .pagination {
   display: flex;
@@ -301,34 +310,34 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 <!-- SLIDE 2 — The Problem                                 -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
-  <h2>RAG in 2026 :)</h2>
-  <h3>“RAG AI? too late” meme, but still useful when done right</h3>
+  <h2>RAG in 2026: From Magic Trick to Plumbing</h2>
+  <h3>“RAG is dead” is a meme. Bad RAG is dead. Engineered RAG still wins.</h3>
   <div class="vector-panel">
     <svg viewBox="0 0 980 300" role="img" aria-label="Meme style comparison old RAG hype vs practical 2026 stack">
       <rect x="40" y="40" width="400" height="220" rx="14" fill="#161b22" stroke="#30363d"/>
       <text x="240" y="78" fill="#e6edf3" font-size="24" text-anchor="middle" font-family="Space Grotesk, sans-serif">2019-2023</text>
-      <text x="240" y="110" fill="#8b949e" font-size="16" text-anchor="middle" font-family="Manrope, sans-serif">“Just add RAG bro”</text>
+      <text x="240" y="110" fill="#8b949e" font-size="16" text-anchor="middle" font-family="Manrope, sans-serif">“Just add RAG, bro”</text>
       <text x="240" y="150" fill="#ff7b72" font-size="44" text-anchor="middle">📈🔥</text>
-      <text x="240" y="190" fill="#8b949e" font-size="14" text-anchor="middle" font-family="IBM Plex Mono, monospace">hype without operations</text>
+      <text x="240" y="190" fill="#8b949e" font-size="14" text-anchor="middle" font-family="IBM Plex Mono, monospace">PDF + vector DB + hope</text>
 
       <rect x="540" y="40" width="400" height="220" rx="14" fill="#0f2a46" stroke="#58a6ff"/>
       <text x="740" y="78" fill="#e6edf3" font-size="24" text-anchor="middle" font-family="Space Grotesk, sans-serif">2026 reality</text>
       <text x="740" y="110" fill="#a5d6ff" font-size="16" text-anchor="middle" font-family="Manrope, sans-serif">RAG + tools + memory + evals</text>
       <text x="740" y="152" fill="#6ef3a5" font-size="42" text-anchor="middle">🧠⚙️📚✅</text>
-      <text x="740" y="192" fill="#a5d6ff" font-size="14" text-anchor="middle" font-family="IBM Plex Mono, monospace">production > hype</text>
+      <text x="740" y="192" fill="#a5d6ff" font-size="14" text-anchor="middle" font-family="IBM Plex Mono, monospace">evals + reliability &gt; hype</text>
     </svg>
   </div>
   <p style="margin-top:1.2rem;color:var(--primary);">
-    Smile moment: <strong>RAG alone is late, RAG with good engineering is not.</strong>
+    Smile moment: <strong>2023: weekend project. 2026: production plumbing (with a scary cloud bill).</strong>
   </p>
-  <p style="margin-top:0.6rem;color:var(--text-low);">Tech stack is coming next (including vector DB + object storage).</p>
+  <p style="margin-top:0.6rem;color:var(--text-low);">Next: stack choices (vector DB + object storage + memory + evals).</p>
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
 <!-- SLIDE 3 — Architecture                                -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
-  <h2>Architecture at a Glance</h2>
+  <h2>Architecture</h2>
   <div class="vector-panel">
     <svg viewBox="0 0 980 300" role="img" aria-label="Architecture flow from CLI to demos and runtime components">
       <defs>
@@ -380,7 +389,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
     <li>Goal: ship AI features in Java without writing glue code for every model interaction.</li>
   </ul>
   <div class="lc4j-logo">
-    <img src="https://docs.langchain4j.dev/img/logo.svg" alt="LangChain4j logo from official docs">
+    <img src="https://docs.langchain4j.dev/img/logo.svg" width="250" height="250" alt="LangChain4j logo from official docs">
   </div>
   <p style="margin-top:0.7rem;color:var(--text-low);">Think: Spring-style ergonomics for LLM workflows.</p>
 </section>
@@ -782,6 +791,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
   <button id="prev" aria-label="Previous slide">◂ Prev</button>
   <span id="counter">1 / 15</span>
   <div id="pagination" class="pagination" aria-label="Slide pagination"></div>
+  <button id="refresh" class="icon-btn" aria-label="Refresh page" title="Refresh page">↻</button>
   <button id="next" aria-label="Next slide">Next ▸</button>
 </nav>
 
@@ -791,7 +801,9 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
   const counter = document.getElementById('counter');
   const prevBtn = document.getElementById('prev');
   const nextBtn = document.getElementById('next');
+  const refreshBtn = document.getElementById('refresh');
   const pagination = document.getElementById('pagination');
+  const storageKey = 'slides:' + window.location.pathname;
   let current = 0;
   const slideIcons = ['🏷️', '😂', '🏗️', '🔗', '⚖️', '🧰', '🧩', '🧾', '🛠️', '📚', '🔎', '💼', '📝', '🔗', '⚙️'];
 
@@ -807,10 +819,33 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
     return btn;
   });
 
+  function parsePersistedIndex() {
+    const hashMatch = window.location.hash.match(/(?:slide-)?(\d+)$/);
+    if (hashMatch) {
+      return Number(hashMatch[1]) - 1;
+    }
+    const stored = window.localStorage.getItem(storageKey);
+    if (stored !== null) {
+      return Number(stored) - 1;
+    }
+    return 0;
+  }
+
+  function persistIndex(index) {
+    const slideNumber = String(index + 1);
+    window.localStorage.setItem(storageKey, slideNumber);
+    if (window.history && typeof window.history.replaceState === 'function') {
+      window.history.replaceState(null, '', '#slide-' + slideNumber);
+      return;
+    }
+    window.location.hash = 'slide-' + slideNumber;
+  }
+
   function show(index) {
     slides[current].classList.remove('active');
     current = Math.max(0, Math.min(index, slides.length - 1));
     slides[current].classList.add('active');
+    persistIndex(current);
     counter.textContent = (current + 1) + ' / ' + slides.length;
     pageButtons.forEach(function (btn, i) {
       btn.classList.toggle('active', i === current);
@@ -821,6 +856,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
 
   prevBtn.addEventListener('click', function () { show(current - 1); });
   nextBtn.addEventListener('click', function () { show(current + 1); });
+  refreshBtn.addEventListener('click', function () { window.location.reload(); });
 
   document.addEventListener('keydown', function (e) {
     if (e.key === 'ArrowRight' || e.key === ' ')  { e.preventDefault(); show(current + 1); }
@@ -829,7 +865,7 @@ nav span { color: var(--text-low); font-size: 0.9rem; min-width: 4.8rem; text-al
     if (e.key === 'End')                             { e.preventDefault(); show(slides.length - 1); }
   });
 
-  show(0);
+  show(parsePersistedIndex());
 })();
 </script>
 </body>
