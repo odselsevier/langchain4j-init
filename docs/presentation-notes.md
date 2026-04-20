@@ -138,14 +138,7 @@ as code, so architecture does not drift."
 
 ---
 
-## Slide 14 — Java ↔ MDX Synergy (20 s)
-
-"Every major Java component has a matching visual. Update code and diagram in
-one commit. That lowers onboarding time and reduces tribal knowledge."
-
----
-
-## Slide 15 — Developer Experience & Testing (30 s)
+## Slide 14 — Developer Experience & Testing (30 s)
 
 "We prioritise DX:
 - `docker compose up` gives you Ollama + Milvus in seconds.
