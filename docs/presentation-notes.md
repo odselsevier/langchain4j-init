@@ -7,9 +7,8 @@
 
 ## Slide 1 — Title (15 s)
 
-"Welcome. Today I'll walk you through **langchain4j-init** — a production-ready
-showcase that brings large-language-model capabilities into a clean, idiomatic
-Java codebase with interactive MDX documentation."
+"Welcome. Today I'll walk you through **langchain4j-init** — 
+a repo that brings large-language-model capabilities into a single Java codebase."
 
 ---
 

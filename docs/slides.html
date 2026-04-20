@@ -28,6 +28,9 @@ body { display: flex; flex-direction: column; }
 .slide ul li::before { content: '▸'; position: absolute; left: 0; color: #58a6ff; }
 .slide code { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
 .slide .badge { display: inline-block; background: #1f6feb; color: #fff; font-size: 0.85rem; padding: 0.2rem 0.7rem; border-radius: 999px; margin-right: 0.4rem; }
+.rag-visual-wrap { margin-top: 1.2rem; width: 100%; max-width: 60rem; }
+.rag-visual { width: 100%; height: auto; }
+.rag-caption { margin-top: 0.8rem; font-size: 1.05rem; color: #8b949e; }
 
 /* ── Code blocks ───────────────────────────────────────── */
 pre {
@@ -77,7 +80,7 @@ nav span { color: #8b949e; font-size: 0.95rem; min-width: 5rem; text-align: cent
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide active">
   <h1>langchain4j-init</h1>
-  <h3>Production-Ready LangChain4j Showcase</h3>
+  <h3>LangChain4j demo</h3>
   <p>AI Services · RAG · Tool Calling · Chat Memory</p>
   <p style="margin-top:2rem;font-size:1rem;color:#8b949e;">Java 17+ &nbsp;|&nbsp; LangChain4j 1.0-beta3 &nbsp;|&nbsp; MDX Docs</p>
 </section>
@@ -197,7 +200,86 @@ nav span { color: #8b949e; font-size: 0.95rem; min-width: 5rem; text-align: cent
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 8 — MDX Documentation                           -->
+<!-- SLIDE 8 — What Is RAG                                 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="slide">
+  <h2>What Is RAG? (Half-Technical View)</h2>
+  <ul>
+    <li><strong>RAG = Retrieval-Augmented Generation</strong>: the model looks things up before answering.</li>
+    <li>Think of it as <strong>LLM + search</strong>: search finds relevant facts, the LLM explains them.</li>
+    <li>Result: fewer hallucinations, more grounded answers from your own docs.</li>
+  </ul>
+  <div class="rag-visual-wrap">
+    <svg class="rag-visual" viewBox="0 0 980 300" role="img" aria-label="RAG flow from user question to vector search to answer">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#58a6ff"></path>
+        </marker>
+      </defs>
+      <rect x="30" y="80" width="190" height="90" rx="12" fill="#161b22" stroke="#30363d"/>
+      <text x="125" y="114" fill="#c9d1d9" font-size="18" text-anchor="middle" font-family="Segoe UI, sans-serif">User Question</text>
+      <text x="125" y="140" fill="#8b949e" font-size="14" text-anchor="middle" font-family="Segoe UI, sans-serif">"How do refunds work?"</text>
+
+      <rect x="280" y="80" width="190" height="90" rx="12" fill="#161b22" stroke="#30363d"/>
+      <text x="375" y="118" fill="#c9d1d9" font-size="18" text-anchor="middle" font-family="Segoe UI, sans-serif">Vector Search</text>
+      <text x="375" y="142" fill="#8b949e" font-size="14" text-anchor="middle" font-family="Segoe UI, sans-serif">Find top relevant chunks</text>
+
+      <rect x="530" y="50" width="190" height="70" rx="12" fill="#0f2a46" stroke="#58a6ff"/>
+      <text x="625" y="80" fill="#e6edf3" font-size="16" text-anchor="middle" font-family="Segoe UI, sans-serif">Policy chunk A</text>
+      <text x="625" y="98" fill="#a5d6ff" font-size="12" text-anchor="middle" font-family="Segoe UI, sans-serif">Returns in 30 days</text>
+
+      <rect x="530" y="140" width="190" height="70" rx="12" fill="#0f2a46" stroke="#58a6ff"/>
+      <text x="625" y="170" fill="#e6edf3" font-size="16" text-anchor="middle" font-family="Segoe UI, sans-serif">Policy chunk B</text>
+      <text x="625" y="188" fill="#a5d6ff" font-size="12" text-anchor="middle" font-family="Segoe UI, sans-serif">Receipt required</text>
+
+      <rect x="760" y="80" width="190" height="90" rx="12" fill="#161b22" stroke="#30363d"/>
+      <text x="855" y="114" fill="#c9d1d9" font-size="18" text-anchor="middle" font-family="Segoe UI, sans-serif">LLM Answer</text>
+      <text x="855" y="140" fill="#8b949e" font-size="14" text-anchor="middle" font-family="Segoe UI, sans-serif">Grounded response</text>
+
+      <line x1="220" y1="125" x2="280" y2="125" stroke="#58a6ff" stroke-width="3" marker-end="url(#arrow)"/>
+      <line x1="470" y1="125" x2="530" y2="85" stroke="#58a6ff" stroke-width="3" marker-end="url(#arrow)"/>
+      <line x1="470" y1="125" x2="530" y2="175" stroke="#58a6ff" stroke-width="3" marker-end="url(#arrow)"/>
+      <line x1="720" y1="125" x2="760" y2="125" stroke="#58a6ff" stroke-width="3" marker-end="url(#arrow)"/>
+    </svg>
+  </div>
+  <p class="rag-caption">Plain English: "Don’t guess from memory, read the right pages first, then answer."</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SLIDE 9 — Use Cases & Benefits                        -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="slide">
+  <h2>Use Cases We’re Presenting (Benefits View)</h2>
+  <table>
+    <tr><th>Use Case</th><th>Demo Piece</th><th>Business Benefit</th></tr>
+    <tr>
+      <td>Support ticket triage</td>
+      <td><code>SupportExtractorService</code></td>
+      <td>Faster routing, less manual tagging, better SLA compliance</td>
+    </tr>
+    <tr>
+      <td>Inventory-aware assistant</td>
+      <td><code>@Tool</code> + <code>InventoryTools</code></td>
+      <td>Real-time answers, fewer escalations, improved customer trust</td>
+    </tr>
+    <tr>
+      <td>Knowledge Q&amp;A over docs</td>
+      <td>RAG pipeline + vector store</td>
+      <td>Grounded answers, lower hallucination risk, quicker onboarding</td>
+    </tr>
+    <tr>
+      <td>Multi-turn agent support</td>
+      <td>Chat memory window</td>
+      <td>More natural conversations and less repeated context by users</td>
+    </tr>
+  </table>
+  <p style="margin-top:1.3rem;color:#58a6ff;">
+    Message for stakeholders: <strong>faster operations, better answer quality, and lower support cost.</strong>
+  </p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SLIDE 10 — MDX Documentation                           -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Interactive MDX Documentation</h2>
@@ -211,7 +293,7 @@ nav span { color: #8b949e; font-size: 0.95rem; min-width: 5rem; text-align: cent
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 9 — Java ↔ MDX Synergy                         -->
+<!-- SLIDE 11 — Java ↔ MDX Synergy                         -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Java ↔ MDX Synergy</h2>
@@ -226,7 +308,7 @@ nav span { color: #8b949e; font-size: 0.95rem; min-width: 5rem; text-align: cent
 </section>
 
 <!-- ══════════════════════════════════════════════════════ -->
-<!-- SLIDE 10 — DX & Testing                               -->
+<!-- SLIDE 12 — DX & Testing                               -->
 <!-- ══════════════════════════════════════════════════════ -->
 <section class="slide">
   <h2>Developer Experience &amp; Testing</h2>
@@ -248,7 +330,7 @@ nav span { color: #8b949e; font-size: 0.95rem; min-width: 5rem; text-align: cent
 <!-- ── Navigation ────────────────────────────────────────── -->
 <nav>
   <button id="prev" aria-label="Previous slide">◂ Prev</button>
-  <span id="counter">1 / 10</span>
+  <span id="counter">1 / 12</span>
   <button id="next" aria-label="Next slide">Next ▸</button>
 </nav>
 

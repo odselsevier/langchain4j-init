@@ -1,6 +1,6 @@
 # langchain4j-init
 
-> Production-ready LangChain4j showcase — AI Services, RAG, Tool Calling & Chat Memory
+> LangChain4j repo — AI Services, RAG, Tool Calling & Chat Memory
 
 ## Prerequisites
 

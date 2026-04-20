@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>langchain4j-init</name>
-    <description>Production-ready LangChain4j showcase: AI Services, RAG, Tool Calling, Memory</description>
+    <description>LangChain4j showcase: AI Services, RAG, Tool Calling, Memory</description>
 
     <properties>
         <java.version>17</java.version>
