@@ -16,8 +16,11 @@ import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * CLI entry point that runs each demo in sequence.
@@ -36,8 +39,12 @@ public class Main {
     private static final Logger log = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) throws Exception {
-        String ollamaUrl = envOrDefault("OLLAMA_BASE_URL", "http://localhost:11434");
-        String modelName = envOrDefault("OLLAMA_MODEL", "mistral");
+        Properties props = loadProperties();
+
+        String ollamaUrl = envOrDefault("OLLAMA_BASE_URL",
+                props.getProperty("ollama.base.url", "http://localhost:11434"));
+        String modelName = envOrDefault("OLLAMA_MODEL",
+                props.getProperty("ollama.model.name", "mistral"));
 
         ChatLanguageModel chatModel = OllamaChatModel.builder()
                 .baseUrl(ollamaUrl)
@@ -50,21 +57,23 @@ public class Main {
             case "extract" -> StructuredOutputDemo.run(chatModel);
             case "tools"   -> ToolCallingDemo.run(chatModel);
             case "memory"  -> ChatMemoryDemo.run(chatModel);
-            case "ingest"  -> runIngestion(ollamaUrl, modelName);
-            default        -> runAll(chatModel, ollamaUrl, modelName);
+            case "ingest"  -> runIngestion(ollamaUrl, modelName, props);
+            default        -> runAll(chatModel, ollamaUrl, modelName, props);
         }
     }
 
     private static void runAll(ChatLanguageModel chatModel,
                                String ollamaUrl,
-                               String modelName) throws Exception {
+                               String modelName,
+                               Properties props) throws Exception {
         StructuredOutputDemo.run(chatModel);
         ToolCallingDemo.run(chatModel);
         ChatMemoryDemo.run(chatModel);
-        runIngestion(ollamaUrl, modelName);
+        runIngestion(ollamaUrl, modelName, props);
     }
 
-    private static void runIngestion(String ollamaUrl, String modelName) throws Exception {
+    private static void runIngestion(String ollamaUrl, String modelName,
+                                     Properties props) throws Exception {
         log.info("=== RAG Ingestion Demo ===");
 
         EmbeddingModel embeddingModel = OllamaEmbeddingModel.builder()
@@ -74,13 +83,30 @@ public class Main {
 
         EmbeddingStore<TextSegment> store = new InMemoryEmbeddingStore<>();
 
-        IngestionPipeline pipeline = new IngestionPipeline(embeddingModel, store, 300, 30);
+        int chunkSize = Integer.parseInt(props.getProperty("rag.chunk.size", "300"));
+        int chunkOverlap = Integer.parseInt(props.getProperty("rag.chunk.overlap", "30"));
+        String docsPath = props.getProperty("rag.documents.path", "src/main/resources/documents");
 
-        Path docsDir = Path.of("src/main/resources/documents");
+        IngestionPipeline pipeline = new IngestionPipeline(embeddingModel, store, chunkSize, chunkOverlap);
+
+        Path docsDir = Path.of(docsPath);
         List<Document> docs = DocumentLoaderUtil.loadTextFiles(docsDir);
         pipeline.ingest(docs);
 
         log.info("Ingestion finished — embeddings stored in-memory.");
+    }
+
+    private static Properties loadProperties() {
+        Properties props = new Properties();
+        try (InputStream is = Main.class.getClassLoader()
+                .getResourceAsStream("application.properties")) {
+            if (is != null) {
+                props.load(is);
+            }
+        } catch (IOException e) {
+            log.warn("Could not load application.properties, using defaults", e);
+        }
+        return props;
     }
 
     private static String envOrDefault(String key, String defaultValue) {

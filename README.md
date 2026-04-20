@@ -66,11 +66,14 @@ java -jar target/langchain4j-init-1.0.0-SNAPSHOT.jar tools
 ## Running Tests
 
 ```bash
-# Unit tests only (no Docker required)
-mvn test -DexcludedGroups=integration
-
-# All tests including Testcontainers (requires Docker)
+# Unit tests only (no Docker required — Surefire excludes @Tag("integration") by default)
 mvn test
+
+# Integration tests only (requires Docker)
+mvn verify -DskipUnitTests
+
+# All tests: unit + integration (requires Docker)
+mvn verify
 ```
 
 ## Documentation
