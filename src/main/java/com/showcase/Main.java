@@ -83,8 +83,8 @@ public class Main {
 
         EmbeddingStore<TextSegment> store = new InMemoryEmbeddingStore<>();
 
-        int chunkSize = Integer.parseInt(props.getProperty("rag.chunk.size", "300"));
-        int chunkOverlap = Integer.parseInt(props.getProperty("rag.chunk.overlap", "30"));
+        int chunkSize = parseIntOrDefault(props.getProperty("rag.chunk.size"), 300);
+        int chunkOverlap = parseIntOrDefault(props.getProperty("rag.chunk.overlap"), 30);
         String docsPath = props.getProperty("rag.documents.path", "src/main/resources/documents");
 
         IngestionPipeline pipeline = new IngestionPipeline(embeddingModel, store, chunkSize, chunkOverlap);
@@ -107,6 +107,18 @@ public class Main {
             log.warn("Could not load application.properties, using defaults", e);
         }
         return props;
+    }
+
+    private static int parseIntOrDefault(String value, int defaultValue) {
+        if (value == null || value.isBlank()) {
+            return defaultValue;
+        }
+        try {
+            return Integer.parseInt(value.trim());
+        } catch (NumberFormatException e) {
+            log.warn("Invalid integer '{}', using default {}", value, defaultValue);
+            return defaultValue;
+        }
     }
 
     private static String envOrDefault(String key, String defaultValue) {
