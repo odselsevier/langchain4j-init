@@ -1,7 +1,7 @@
-package com.showcase.features;
+package com.showcase.product.features.extraction;
 
-import com.showcase.ai.SupportExtractorService;
-import com.showcase.ai.TicketDetails;
+import com.showcase.product.support.SupportExtractorService;
+import com.showcase.product.support.TicketDetails;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
 package com.showcase;
 
-import com.showcase.ai.WebsiteFaqTools;
+import com.showcase.product.faq.WebsiteFaqTools;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

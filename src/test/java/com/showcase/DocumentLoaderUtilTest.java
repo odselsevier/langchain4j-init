@@ -1,6 +1,6 @@
 package com.showcase;
 
-import com.showcase.rag.DocumentLoaderUtil;
+import com.showcase.platform.rag.DocumentLoaderUtil;
 import dev.langchain4j.data.document.Document;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;

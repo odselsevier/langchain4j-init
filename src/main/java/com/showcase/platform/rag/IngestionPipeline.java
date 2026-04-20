@@ -1,4 +1,4 @@
-package com.showcase.rag;
+package com.showcase.platform.rag;
 
 import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.DocumentSplitter;

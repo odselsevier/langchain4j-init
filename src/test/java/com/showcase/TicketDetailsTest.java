@@ -1,6 +1,6 @@
 package com.showcase;
 
-import com.showcase.ai.TicketDetails;
+import com.showcase.product.support.TicketDetails;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

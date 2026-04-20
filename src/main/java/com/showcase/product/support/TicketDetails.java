@@ -1,4 +1,4 @@
-package com.showcase.ai;
+package com.showcase.product.support;
 
 /**
  * Strongly-typed POJO for structured output extraction.

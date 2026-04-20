@@ -1,4 +1,4 @@
-package com.showcase.ai;
+package com.showcase.product.inventory;
 
 import dev.langchain4j.agent.tool.Tool;
 

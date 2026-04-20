@@ -1,4 +1,4 @@
-package com.showcase.ai;
+package com.showcase.product.assistant;
 
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;

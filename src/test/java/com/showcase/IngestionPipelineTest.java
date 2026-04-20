@@ -1,6 +1,6 @@
 package com.showcase;
 
-import com.showcase.rag.IngestionPipeline;
+import com.showcase.platform.rag.IngestionPipeline;
 import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;

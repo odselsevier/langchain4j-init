@@ -1,4 +1,4 @@
-package com.showcase.features;
+package com.showcase.product.features.chat;
 
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;

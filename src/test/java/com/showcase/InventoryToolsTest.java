@@ -1,6 +1,6 @@
 package com.showcase;
 
-import com.showcase.ai.InventoryTools;
+import com.showcase.product.inventory.InventoryTools;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

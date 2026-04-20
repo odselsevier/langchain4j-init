@@ -1,6 +1,6 @@
 package com.showcase;
 
-import com.showcase.features.ToolCallingDemo;
+import com.showcase.product.features.tools.ToolCallingDemo;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.ollama.OllamaChatModel;
 

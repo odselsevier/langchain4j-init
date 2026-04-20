@@ -1,4 +1,4 @@
-package com.showcase.features;
+package com.showcase.product.features.fit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ public class UseCaseFitDemo {
 
         log.info("GOOD FIT:");
         log.info("  1) Typed extraction from messy text -> see `extract` demo");
-        log.info("  2) Tool-calling into business systems -> see `tools` demo");
+        log.info("  2) FAQ-grounded product Q&A (WebsiteFaqTools + inventory tool-calling) -> see `tools` demo");
         log.info("  3) Multi-turn context handling -> see `memory` demo");
         log.info("  4) Retrieval pipelines for internal docs -> see `ingest` demo");
 

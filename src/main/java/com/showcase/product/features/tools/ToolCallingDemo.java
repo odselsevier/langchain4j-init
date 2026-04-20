@@ -1,8 +1,8 @@
-package com.showcase.features;
+package com.showcase.product.features.tools;
 
-import com.showcase.ai.AssistantWithTools;
-import com.showcase.ai.InventoryTools;
-import com.showcase.ai.WebsiteFaqTools;
+import com.showcase.product.assistant.AssistantWithTools;
+import com.showcase.product.faq.WebsiteFaqTools;
+import com.showcase.product.inventory.InventoryTools;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.service.AiServices;
 import org.slf4j.Logger;
