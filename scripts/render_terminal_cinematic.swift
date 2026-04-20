@@ -62,8 +62,8 @@ let logs: [LogLine] = [
     .init(at: 1.62, text: "14:22:10.624 [main] DEBUG dev.langchain4j.service.AiServices - Registered tools: InventoryTools.checkInventory, InventoryTools.restockOrder", color: dimGreen),
     .init(at: 2.05, text: "14:22:11.052 [main] INFO  dev.langchain4j.model.ollama.OllamaChatModel - Sending chat request to http://localhost:11434", color: dimGreen),
     .init(at: 2.46, text: "14:22:11.468 [main] INFO  dev.langchain4j.model.ollama.OllamaChatModel - Tool execution requested: checkInventory(sku=WIDGET-99)", color: dimGreen),
-    .init(at: 3.05, text: "14:22:12.053 [main] INFO  com.showcase.ai.InventoryTools - checkInventory(WIDGET-99) -> SKU-WIDGET-99: 42 units in stock", color: dimGreen),
-    .init(at: 3.75, text: "14:22:12.757 [main] INFO  com.showcase.features.ToolCallingDemo - Assistant → We currently have SKU-WIDGET-99: 42 units in stock.", color: softWhite)
+    .init(at: 3.05, text: "14:22:12.053 [main] INFO  com.showcase.ai.InventoryTools - checkInventory(WIDGET-99) -> SKU-WIDGET-99: 42 products in stock", color: dimGreen),
+    .init(at: 3.75, text: "14:22:12.757 [main] INFO  com.showcase.features.ToolCallingDemo - Assistant → We currently have SKU-WIDGET-99: 42 products in stock.", color: softWhite)
 ]
 
 func drawLine(_ context: CGContext, text: String, x: CGFloat, y: CGFloat, font: NSFont, color: NSColor) {
