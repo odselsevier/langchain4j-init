@@ -63,11 +63,13 @@ java -jar target/langchain4j-init-1.0.0-SNAPSHOT.jar ingest
 
 | Developer Problem | Demo | Immediate Benefit |
 |---|---|---|
+| "I need website FAQ grounding (events, pricing, support)." | `WebsiteFaqTools` + `tools` | Retrieval-style FAQ context for grounded answers |
 | "Should we use LangChain4j here?" | `fit` | Code-backed good vs bad use-case rubric |
 | "I need typed output, not string parsing." | `extract` | Structured data extraction into Java records |
 | "I need model + backend actions." | `tools` | Tool-calling over Java methods (`@Tool`) |
 | "I need context over multiple turns." | `memory` | Conversation continuity via chat memory |
 | "I need docs-grounded answers." | `ingest` | RAG ingestion pipeline (load -> split -> embed -> store) |
+| "I need FAQ + stock in one answer." | `WebsiteFaqTools` + `InventoryTools` | One natural-language response with events + products in stock |
 
 ## Good Fit vs Bad Fit for LangChain4j
 
@@ -89,7 +91,7 @@ java -jar target/langchain4j-init-1.0.0-SNAPSHOT.jar ingest
 
 - RAG was introduced in 2020 in the paper "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks" (Patrick Lewis et al., then at Facebook AI).
 - Adoption accelerated massively after 2022, as teams looked for ways to ground LLM outputs with external knowledge in the ChatGPT era.
-- `InventoryTools` uses mocked data (`"42 units in stock"`) to demonstrate tool-calling mechanics.
+- `InventoryTools` uses mocked data (`"42 products in stock"`) to demonstrate tool-calling mechanics.
 - Current `ingest` demo stores embeddings in `InMemoryEmbeddingStore` for simplicity.
 - Milvus is provided in `docker-compose.yml` as production-like infrastructure for extension.
 
